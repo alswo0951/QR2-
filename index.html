@@ -192,7 +192,7 @@
                     </div>
                     <div>
                         <span class="text-[9px] text-amber-800 block font-black uppercase">🚨 16P 구성 포장 분할 지침</span>
-                        <div class="text-xs font-black text-amber-950">8P 박스 2개에 부자재 소포장을 각 1개씩 넣어 포장!</div>
+                        <div class="text-xs font-black text-amber-950">8P 박스 2개에 부자재 소포장을 분할하여 포장!</div>
                     </div>
                 </div>
 
@@ -270,14 +270,15 @@
                         <i class="fa-solid fa-sliders text-brand-500"></i> TPU 자가 가변형 공박스 규칙 커스텀
                     </span>
                     
-                    <div>
-                        <label class="block text-[9px] font-bold text-brand-600 mb-1">기본 입수 설정량</label>
-                        <input type="number" id="input-default-qty" value="6" class="w-full bg-white border border-brand-200 rounded-xl px-3 py-2 font-bold focus:outline-none">
-                    </div>
-
-                    <div>
-                        <label class="block text-[9px] font-bold text-brand-600 mb-1">합포 가능한 최대 한계 수량 (최대 수량)</label>
-                        <input type="number" id="input-max-qty" value="14" class="w-full bg-white border border-brand-200 rounded-xl px-3 py-2 font-bold focus:outline-none">
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[9px] font-bold text-brand-600 mb-1">기본 입수 설정량</label>
+                            <input type="number" id="input-default-qty" value="6" class="w-full bg-white border border-brand-200 rounded-xl px-3 py-2 font-bold focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] font-bold text-brand-600 mb-1">합포 최대 수량</label>
+                            <input type="number" id="input-max-qty" value="14" class="w-full bg-white border border-brand-200 rounded-xl px-3 py-2 font-bold focus:outline-none">
+                        </div>
                     </div>
 
                     <div>
@@ -295,16 +296,56 @@
                             <input type="text" id="input-box-large-name" value="14P 초대형박스" class="w-full bg-white border border-brand-200 rounded-xl px-2.5 py-2 font-bold focus:outline-none">
                         </div>
                     </div>
+
+                    <!-- TPU 부자재 자유 편집 영역 -->
+                    <div class="border-t border-brand-200/60 pt-2 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <label class="block text-[10px] font-bold text-brand-700">매트용 동반 부자재 설정</label>
+                            <button type="button" onclick="addTpuAccessoryRow()" class="bg-brand-500 text-white text-[8px] font-bold px-2 py-1 rounded hover:bg-brand-600 transition-colors">
+                                <i class="fa-solid fa-plus"></i> 추가
+                            </button>
+                        </div>
+                        <div id="cms-tpu-accessories-list" class="space-y-1.5">
+                            <!-- JS로 부자재 행 동적 생성 -->
+                        </div>
+                    </div>
                 </div>
 
-                <!-- 베이비룸 설정 전용 요약 영역 (기본 프리셋 고정 안내) -->
-                <div id="cms-babyroom-group" class="bg-brand-50 p-3 rounded-2xl border border-brand-100 space-y-1.5 hidden">
+                <!-- 베이비룸 설정 전용 요약 영역 -->
+                <div id="cms-babyroom-group" class="bg-brand-50 p-3 rounded-2xl border border-brand-100 space-y-3 hidden">
                     <span class="text-[10px] font-extrabold text-brand-800 flex items-center gap-1">
-                        <i class="fa-solid fa-shapes text-brand-500"></i> 하이가드 베이비룸 세트 규칙 가이드
+                        <i class="fa-solid fa-shapes text-brand-500"></i> 베이비룸 세트별 수량 & 부자재 자유 설정
                     </span>
                     <p class="text-[9px] text-brand-600 leading-relaxed font-bold">
-                        베이비룸 타입 선택 시 <strong>10P / 12P / 14P / 16P 세트 규칙</strong>이 기본 시스템 패키지로 자동 매핑되어 활성화됩니다.
+                        10P, 12P, 14P, 16P 세트 각각에 소요되는 모든 가드 종류와 부자재 구성 수량을 독립적으로 변경할 수 있습니다.
                     </p>
+
+                    <!-- 세트 선택용 탭 (CMS 내부) -->
+                    <div class="grid grid-cols-4 gap-1 bg-white p-1 rounded-xl border border-brand-200">
+                        <button type="button" id="cms-tab-10p" onclick="switchCmsBabyroomTab('10P')" class="text-[9px] font-bold py-1.5 rounded-lg bg-brand-100 text-brand-900">10P</button>
+                        <button type="button" id="cms-tab-12p" onclick="switchCmsBabyroomTab('12P')" class="text-[9px] font-bold py-1.5 rounded-lg text-brand-600 hover:text-brand-900">12P</button>
+                        <button type="button" id="cms-tab-14p" onclick="switchCmsBabyroomTab('14P')" class="text-[9px] font-bold py-1.5 rounded-lg text-brand-600 hover:text-brand-900">14P</button>
+                        <button type="button" id="cms-tab-16p" onclick="switchCmsBabyroomTab('16P')" class="text-[9px] font-bold py-1.5 rounded-lg text-brand-600 hover:text-brand-900">16P</button>
+                    </div>
+
+                    <!-- 세트 정보 설정 상세 구역 -->
+                    <div class="space-y-2.5">
+                        <div>
+                            <label class="block text-[9px] font-bold text-brand-600 mb-1" id="cms-box-label">선택된 세트 추천 박스명</label>
+                            <input type="text" id="input-babyroom-box" class="w-full bg-white border border-brand-200 rounded-xl px-2.5 py-2 font-bold focus:outline-none">
+                        </div>
+
+                        <div class="flex items-center justify-between border-t border-brand-200/60 pt-2">
+                            <span class="text-[9px] font-extrabold text-brand-700">구성 가드 & 부자재 리스트</span>
+                            <button type="button" onclick="addBabyroomComponentRow()" class="bg-brand-500 text-white text-[8px] font-bold px-2 py-1 rounded hover:bg-brand-600 transition-colors">
+                                <i class="fa-solid fa-plus"></i> 구성품 추가
+                            </button>
+                        </div>
+
+                        <div id="cms-babyroom-components-list" class="space-y-1.5">
+                            <!-- 동적 세트 구성품 목록 리스트 -->
+                        </div>
+                    </div>
                 </div>
 
                 <div>
@@ -340,7 +381,7 @@
                     </div>
                     <div class="space-y-1.5 overflow-hidden">
                         <span class="text-[9px] bg-brand-100 text-brand-800 font-extrabold px-2 py-0.5 rounded border border-brand-200 uppercase" id="qr-target-code">LCC-TPU-CNR</span>
-                        <div class="text-[10px] text-brand-900 font-black truncate max-w-[180px]" id="qr-target-name">[리코코] 디자인 TPU 클립매트 모던 갤럭시 코너형</div>
+                        <div class="text-[10px] text-brand-900 font-black truncate max-w-[180px]" id="qr-target-name">...</div>
                         <div class="text-[9px] text-brand-500 font-mono select-all truncate max-w-[180px]" id="qr-target-link">Direct Link</div>
                     </div>
                 </div>
@@ -364,7 +405,7 @@
 
     <script>
         // --- ★ 동기화 방해를 원천 차단하는 핵심 타임스탬프 변수 ---
-        const CLIENT_VERSION = "1717325902"; // 기본 타임스탬프 마커
+        const CLIENT_VERSION = "1717325999"; // 배포 타임스탬프 마커
 
         // --- 1. 꿈비 리코코 TPU 매트 & 베이비룸 디폴트 데이터베이스 ---
         /* DATA_PLACEHOLDER_START */
@@ -380,7 +421,11 @@
                 boxSmallName: "2P 소형박스",
                 boxLargeName: "6P 표준박스",
                 zone: "1A-1",
-                warning: "박스당 매트 6개 입수가 기본이며, 코너용은 락 고정용 전용 클립 6개가 완전히 동봉되어 합포 출고됩니다. (2개 이하는 2P 소형 공박스 필수)"
+                warning: "박스당 매트 6개 입수가 기본이며, 코너용은 락 고정용 전용 클립 6개가 완전히 동봉되어 합포 출고됩니다. (2개 이하는 2P 소형 공박스 필수)",
+                accessories: [
+                    { name: "전용 고정 클립 (코너)", qty: 6 },
+                    { name: "부품 누락 방지 라벨지", qty: 1 }
+                ]
             },
             {
                 id: "licoco-center",
@@ -393,7 +438,11 @@
                 boxSmallName: "2P 소형박스",
                 boxLargeName: "6P 표준박스",
                 zone: "1A-2",
-                warning: "센터형 매트는 한 박스당 고정 클립이 12개가 들어가야 합니다. 동봉 수량 실수가 잦으니 송장 수량을 반드시 확인 후 포장하십시오."
+                warning: "센터형 매트는 한 박스당 고정 클립이 12개가 들어가야 합니다. 동봉 수량 실수가 잦으니 송장 수량을 반드시 확인 후 포장하십시오.",
+                accessories: [
+                    { name: "전용 고정 클립 (센터)", qty: 12 },
+                    { name: "종이 완충 패드", qty: 2 }
+                ]
             },
             {
                 id: "licoco-side",
@@ -406,28 +455,18 @@
                 boxSmallName: "2P 소형박스",
                 boxLargeName: "6P 표준박스",
                 zone: "1A-3",
-                warning: "사이드형 매트는 표준 한 박스당 클립이 9개 들어갑니다. 수량이 달라지는 경우 송장에 명시된 정량을 대조 검수하십시오."
-            },
-            {
-                id: "licoco-special-14",
-                type: "tpu-mat",
-                code: "LCC-TPU-SP14",
-                name: "[리코코] 초대형 TPU 플레이 매트 14P 세트형",
-                defaultQty: 14,
-                maxQty: 14,          
-                boxThreshold: 4,      
-                boxSmallName: "2P 슬림박스",
-                boxLargeName: "14P 초대형 박스",
-                zone: "2C-3",
-                warning: "민재 님 요청 특수 14P 세트 상품! 기본 입수가 14개 세트이며, 4개 이하 소량 출고 시에는 2P 슬림박스를 유도 인출하십시오."
+                warning: "사이드형 매트는 표준 한 박스당 클립이 9개 들어갑니다. 수량이 달라지는 경우 송장에 명시된 정량을 대조 검수하십시오.",
+                accessories: [
+                    { name: "전용 고정 클립 (사이드)", qty: 9 }
+                ]
             },
             {
                 id: "ggumbi-babyroom",
-                type: "babyroom", // 세트 상품 유형 분리
+                type: "babyroom",
                 code: "GB-HG-BR",
                 name: "[꿈비] 하이가드 베이비룸 풀세트 패키지 (가변형)",
                 zone: "2B-1A",
-                warning: "16P 구성 선택 시 반드시 8P 박스 2개(Box A, Box B)로 나누어 패킹해 포장해야 합니다! 각 상자에 소포장 부자재가 1세트씩 완전히 분산 동봉되도록 2중 마감 검수 하십시오.",
+                warning: "16P 구성 선택 시 반드시 8P 박스 2개(Box A, Box B)로 나누어 패킹해 포장해야 합니다! 각 상자에 소포장 부자재가 완전히 분산 동봉되도록 2중 마감 검수 하십시오.",
                 configs: {
                     "10P": {
                         boxRecommended: "10P 전용 대형박스 1개 사용",
@@ -474,20 +513,29 @@
         ];
         /* DATA_PLACEHOLDER_END */
 
+        // --- STREAMING_CHUNK: Initializing state management and data localizers... ---
         let productsDb = [];
         let currentActiveProductId = "licoco-corner";
         
-        // TPU용 임시 수량 변수
         let simMatQty = 6;
-        // 베이비룸용 현재 세트 선택 보관 변수
         let selectedBabyroomSet = "10P";
+
+        // 임시 CMS용 구조체
+        let tempTpuAccessories = [];
+        let tempBabyroomConfigs = {
+            "10P": { boxRecommended: "", components: [] },
+            "12P": { boxRecommended: "", components: [] },
+            "14P": { boxRecommended: "", components: [] },
+            "16P": { boxRecommended: "", components: [] }
+        };
+        let activeCmsBabyroomTab = "10P";
 
         function loadProductsData() {
             const savedVersion = localStorage.getItem('GGUMBI_CLIENT_VERSION');
             const savedData = localStorage.getItem('GGUMBI_PRODUCTS_DB_DYNAMIC');
             
             if (savedVersion !== CLIENT_VERSION || !savedData) {
-                productsDb = [...initialProductsDb];
+                productsDb = JSON.parse(JSON.stringify(initialProductsDb)); // 딥 카피
                 localStorage.setItem('GGUMBI_PRODUCTS_DB_DYNAMIC', JSON.stringify(productsDb));
                 localStorage.setItem('GGUMBI_CLIENT_VERSION', CLIENT_VERSION);
             } else {
@@ -625,6 +673,7 @@
             });
         }
 
+        // --- STREAMING_CHUNK: Processing product manual views and simulator setup... ---
         function openProductManual(id) {
             currentActiveProductId = id;
             const p = productsDb.find(prod => prod.id === id);
@@ -638,11 +687,10 @@
             document.getElementById('detail-product-zone').innerText = "랙 구역: " + p.zone;
             document.getElementById('detail-product-warning').innerText = p.warning;
 
-            // 시뮬레이터 가시성 분기 핸들링
             if (p.type === "babyroom") {
                 document.getElementById('simulator-tpu-mat').classList.add('hidden');
                 document.getElementById('simulator-babyroom').classList.remove('hidden');
-                selectedBabyroomSet = "10P"; // 기본형
+                selectedBabyroomSet = "10P"; 
                 updateBabyroomSimulation(p);
             } else {
                 document.getElementById('simulator-tpu-mat').classList.remove('hidden');
@@ -701,10 +749,10 @@
                 boxRecommendationText.innerHTML = `<span class="text-brand-600 font-extrabold">[대량 오더] ${largeBox} 인출 사용</span> (수량 지시: ${simMatQty}개 초과)`;
             }
 
-            // 시각화 그리기
             renderTpuVisualLayout(p);
         }
 
+        // --- STREAMING_CHUNK: Handling visual renderings for both TPU and Babyroom styles... ---
         function renderTpuVisualLayout(p) {
             document.getElementById('packing-box-indicator').innerText = "BOX A";
             document.getElementById('visual-layout-grid-b').classList.add('hidden');
@@ -722,14 +770,32 @@
             }
             gridContainer.className = `grid ${cols} gap-2`;
 
+            // 가변 수량만큼 매트 렌더링
             for (let i = 1; i <= simMatQty; i++) {
-                const itemHtml = `
+                gridContainer.insertAdjacentHTML('beforeend', `
                     <div class="bg-brand-50 border-2 border-brand-200 text-[10px] font-extrabold p-3 rounded-xl flex flex-col items-center justify-center gap-1.5 hover:bg-white transition-all shadow-sm">
                         <i class="fa-solid fa-layer-group text-xs text-brand-500"></i>
                         <span>적재 매트 ${i}번</span>
                     </div>
-                `;
-                gridContainer.insertAdjacentHTML('beforeend', itemHtml);
+                `);
+            }
+
+            // 가변 부자재 목록 렌더링 (동반 부자재들을 수량 비율에 맞춰 동적 렌더링)
+            if (p.accessories && p.accessories.length > 0) {
+                gridContainer.insertAdjacentHTML('beforeend', `<div class="col-span-full border-t border-dashed border-brand-200 my-2 pt-2 text-[9px] font-bold text-brand-600 uppercase">📎 동반 합포 부자재 검수 수량</div>`);
+                
+                // 기본 세팅량 대비 가변 배수 구하기
+                const scale = Math.ceil(simMatQty / (p.defaultQty || 6));
+                
+                p.accessories.forEach(acc => {
+                    const totalAccQty = parseInt(acc.qty) * scale;
+                    gridContainer.insertAdjacentHTML('beforeend', `
+                        <div class="col-span-full bg-brand-100 border border-brand-200 text-[10px] p-2.5 rounded-xl flex items-center justify-between font-bold">
+                            <span class="text-brand-800"><i class="fa-solid fa-screwdriver-wrench text-brand-400 mr-1.5"></i> ${acc.name}</span>
+                            <span class="text-brand-950 font-black">${totalAccQty} EA</span>
+                        </div>
+                    `);
+                });
             }
         }
 
@@ -737,7 +803,6 @@
         function switchBabyroomSet(setKey) {
             selectedBabyroomSet = setKey;
             
-            // 버튼 상태 토글
             const buttons = ["10P", "12P", "14P", "16P"];
             buttons.forEach(b => {
                 const btnEl = document.getElementById(`btn-set-${b.toLowerCase()}`);
@@ -754,37 +819,38 @@
             }
         }
 
+        // --- STREAMING_CHUNK: Formatting babyroom simulations dynamic tables... ---
         function updateBabyroomSimulation(p) {
-            const config = p.configs[selectedBabyroomSet];
+            const config = p.configs ? p.configs[selectedBabyroomSet] : null;
             if (!config) return;
 
-            // 16P 분할포장 경보 표시 조건문
             const warningEl = document.getElementById('babyroom-box-split-warning');
             if (selectedBabyroomSet === "16P") {
                 warningEl.classList.remove('hidden');
                 document.getElementById('packing-box-indicator').innerText = "8P BOX × 2개";
             } else {
                 warningEl.classList.add('hidden');
-                document.getElementById('packing-box-indicator').innerText = "SINGLE BOX";
+                document.getElementById('packing-box-indicator').innerText = "SINGLE BOX (" + config.boxRecommended + ")";
             }
 
-            // 구성품 테이블 리스트 표출
             const listContainer = document.getElementById('babyroom-components-list');
             listContainer.innerHTML = "";
 
-            config.components.forEach(comp => {
-                const row = `
-                    <div class="flex items-center justify-between border-b border-brand-100/60 pb-1.5">
-                        <span class="text-brand-800 flex items-center gap-1.5">
-                            <i class="fa-solid fa-square-poll-vertical text-[10px] text-brand-400"></i> ${comp.name}
-                        </span>
-                        <span class="text-brand-900 font-extrabold bg-brand-100 px-3 py-0.5 rounded-md">${comp.qty} EA</span>
-                    </div>
-                `;
-                listContainer.insertAdjacentHTML('beforeend', row);
-            });
+            if (!config.components || config.components.length === 0) {
+                listContainer.innerHTML = `<div class="text-center text-brand-500 py-2">등록된 구성품이 없습니다.</div>`;
+            } else {
+                config.components.forEach(comp => {
+                    listContainer.insertAdjacentHTML('beforeend', `
+                        <div class="flex items-center justify-between border-b border-brand-100/60 pb-1.5">
+                            <span class="text-brand-800 flex items-center gap-1.5">
+                                <i class="fa-solid fa-square-poll-vertical text-[10px] text-brand-400"></i> ${comp.name}
+                            </span>
+                            <span class="text-brand-900 font-extrabold bg-brand-100 px-3 py-0.5 rounded-md">${comp.qty} EA</span>
+                        </div>
+                    `);
+                });
+            }
 
-            // 시뮬레이션 도면 렌더링 호출
             renderBabyroomVisualLayout(config.components);
         }
 
@@ -795,52 +861,50 @@
             gridContainerA.innerHTML = "";
             gridContainerB.innerHTML = "";
 
-            // 16P 패키지인 경우에만 8P 박스 2개 분할 시각화 모듈 동작
+            if (!components || components.length === 0) return;
+
+            // 16P 가동 분할
             if (selectedBabyroomSet === "16P") {
                 gridContainerB.classList.remove('hidden');
 
-                gridContainerA.className = "grid grid-cols-2 gap-2";
-                gridContainerB.className = "grid grid-cols-2 gap-2";
+                gridContainerA.className = "grid grid-cols-1 gap-1.5";
+                gridContainerB.className = "grid grid-cols-1 gap-1.5";
 
-                // 가상의 박스 A와 박스 B에 가드 및 부자재 소포장을 균등 배치
-                const halfAccIndex = Math.ceil(components.length / 2);
-                
-                // Box A 렌더링
-                gridContainerA.insertAdjacentHTML('beforeend', `<div class="col-span-2 text-[9px] font-extrabold text-brand-600 uppercase border-b border-brand-100 pb-1">📦 [8P 박스 A] 포장 구성</div>`);
-                components.forEach(comp => {
-                    const halfQty = Math.ceil(comp.qty / 2);
-                    gridContainerA.insertAdjacentHTML('beforeend', `
-                        <div class="bg-white border border-brand-200 text-[10px] p-2.5 rounded-lg flex items-center justify-between shadow-sm">
-                            <span class="font-bold text-brand-800">${comp.name}</span>
-                            <span class="bg-brand-100 text-brand-900 px-2 py-0.5 rounded text-[9px] font-black">${halfQty} EA</span>
-                        </div>
-                    `);
-                });
+                gridContainerA.insertAdjacentHTML('beforeend', `<div class="text-[9px] font-extrabold text-brand-600 uppercase border-b border-brand-100 pb-1">📦 [8P 박스 A] 포장 구성</div>`);
+                gridContainerB.insertAdjacentHTML('beforeend', `<div class="text-[9px] font-extrabold text-brand-600 uppercase border-b border-brand-100 pb-1">📦 [8P 박스 B] 포장 구성</div>`);
 
-                // Box B 렌더링
-                gridContainerB.insertAdjacentHTML('beforeend', `<div class="col-span-2 text-[9px] font-extrabold text-brand-600 uppercase border-b border-brand-100 pb-1">📦 [8P 박스 B] 포장 구성</div>`);
                 components.forEach(comp => {
-                    const halfQty = Math.floor(comp.qty / 2);
-                    if (halfQty > 0) {
+                    const halfA = Math.ceil(comp.qty / 2);
+                    const halfB = Math.floor(comp.qty / 2);
+
+                    if (halfA > 0) {
+                        gridContainerA.insertAdjacentHTML('beforeend', `
+                            <div class="bg-white border border-brand-200 text-[10px] p-2 rounded-lg flex items-center justify-between shadow-sm font-bold">
+                                <span class="text-brand-800">${comp.name}</span>
+                                <span class="bg-brand-100 text-brand-900 px-2 py-0.5 rounded text-[9px] font-black">${halfA} EA</span>
+                            </div>
+                        `);
+                    }
+
+                    if (halfB > 0) {
                         gridContainerB.insertAdjacentHTML('beforeend', `
-                            <div class="bg-white border border-brand-200 text-[10px] p-2.5 rounded-lg flex items-center justify-between shadow-sm">
-                                <span class="font-bold text-brand-800">${comp.name}</span>
-                                <span class="bg-brand-100 text-brand-900 px-2 py-0.5 rounded text-[9px] font-black">${halfQty} EA</span>
+                            <div class="bg-white border border-brand-200 text-[10px] p-2 rounded-lg flex items-center justify-between shadow-sm font-bold">
+                                <span class="text-brand-800">${comp.name}</span>
+                                <span class="bg-brand-100 text-brand-900 px-2 py-0.5 rounded text-[9px] font-black">${halfB} EA</span>
                             </div>
                         `);
                     }
                 });
 
             } else {
-                // 단일 박스 패키지 렌더링 (10P, 12P, 14P)
                 gridContainerB.classList.add('hidden');
                 gridContainerA.className = "grid grid-cols-1 gap-1.5";
 
-                gridContainerA.insertAdjacentHTML('beforeend', `<div class="text-[9px] font-extrabold text-brand-600 uppercase border-b border-brand-100 pb-1">📦 단일 표준 완박스 포장 구성</div>`);
+                gridContainerA.insertAdjacentHTML('beforeend', `<div class="text-[9px] font-extrabold text-brand-600 uppercase border-b border-brand-100 pb-1">📦 단일 완박스 포장 구성</div>`);
                 components.forEach(comp => {
                     gridContainerA.insertAdjacentHTML('beforeend', `
-                        <div class="bg-white border border-brand-200 text-[10px] p-2.5 rounded-xl flex items-center justify-between shadow-sm">
-                            <span class="font-bold text-brand-800 flex items-center gap-1.5">
+                        <div class="bg-white border border-brand-200 text-[10px] p-2.5 rounded-xl flex items-center justify-between shadow-sm font-bold">
+                            <span class="text-brand-800 flex items-center gap-1.5">
                                 <i class="fa-solid fa-circle text-[6px] text-brand-400"></i> ${comp.name}
                             </span>
                             <span class="bg-brand-500 text-white px-2.5 py-0.5 rounded-lg text-[9px] font-black">${comp.qty} EA</span>
@@ -850,6 +914,7 @@
             }
         }
 
+        // --- STREAMING_CHUNK: Designing the CMS administration modules for fully flexible accessories... ---
         // --- 8. 제품 자가관리 (CMS 추가/수정/삭제) ---
         function toggleCmsFormType() {
             const selectedType = document.getElementById('input-type').value;
@@ -865,10 +930,124 @@
             }
         }
 
+        // CMS 내부 탭 전환
+        function switchCmsBabyroomTab(tabKey) {
+            activeCmsBabyroomTab = tabKey;
+            const tabs = ["10P", "12P", "14P", "16P"];
+            tabs.forEach(t => {
+                const tabEl = document.getElementById(`cms-tab-${t.toLowerCase()}`);
+                if (t === tabKey) {
+                    tabEl.className = "text-[9px] font-bold py-1.5 rounded-lg bg-brand-100 text-brand-900";
+                } else {
+                    tabEl.className = "text-[9px] font-bold py-1.5 rounded-lg text-brand-600 hover:text-brand-900";
+                }
+            });
+
+            // 현재 탭에 해당 추천 박스 정보 연출
+            document.getElementById('cms-box-label').innerText = `선택된 [${tabKey}] 세트 추천 박스명`;
+            document.getElementById('input-babyroom-box').value = tempBabyroomConfigs[tabKey].boxRecommended || "";
+
+            renderCmsBabyroomComponents();
+        }
+
+        // --- TPU 부자재 추가 행 컨트롤 ---
+        function addTpuAccessoryRow(name = "", qty = 1) {
+            tempTpuAccessories.push({ name: name, qty: qty });
+            renderCmsTpuAccessories();
+        }
+
+        function removeTpuAccessoryRow(index) {
+            tempTpuAccessories.splice(index, 1);
+            renderCmsTpuAccessories();
+        }
+
+        function renderCmsTpuAccessories() {
+            const container = document.getElementById('cms-tpu-accessories-list');
+            container.innerHTML = "";
+
+            if (tempTpuAccessories.length === 0) {
+                container.innerHTML = `<span class="text-[9px] text-brand-500 block text-center py-1 bg-white border border-dashed rounded-lg">등록된 동반 부자재가 없습니다.</span>`;
+                return;
+            }
+
+            tempTpuAccessories.forEach((acc, index) => {
+                container.insertAdjacentHTML('beforeend', `
+                    <div class="flex items-center gap-1.5 bg-white p-1.5 rounded-xl border border-brand-200">
+                        <input type="text" value="${acc.name}" onchange="updateTpuAccessoryData(${index}, 'name', this.value)" placeholder="예: 고정 클립 (코너)" class="flex-grow bg-brand-50 border border-brand-200 px-2 py-1 rounded text-[10px] font-bold focus:outline-none focus:border-brand-400">
+                        <input type="number" value="${acc.qty}" onchange="updateTpuAccessoryData(${index}, 'qty', this.value)" placeholder="수량" class="w-12 bg-brand-50 border border-brand-200 px-1 py-1 rounded text-[10px] text-center font-bold focus:outline-none focus:border-brand-400">
+                        <button type="button" onclick="removeTpuAccessoryRow(${index})" class="text-rose-500 text-xs px-2 hover:text-rose-700">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                `);
+            });
+        }
+
+        function updateTpuAccessoryData(index, field, value) {
+            if (field === 'qty') {
+                tempTpuAccessories[index].qty = parseInt(value) || 0;
+            } else {
+                tempTpuAccessories[index].name = value;
+            }
+        }
+
+        // --- 베이비룸 세트 구성품 추가 행 컨트롤 ---
+        function addBabyroomComponentRow(name = "", qty = 1) {
+            tempBabyroomConfigs[activeCmsBabyroomTab].components.push({ name: name, qty: qty });
+            renderCmsBabyroomComponents();
+        }
+
+        function removeBabyroomComponentRow(index) {
+            tempBabyroomConfigs[activeCmsBabyroomTab].components.splice(index, 1);
+            renderCmsBabyroomComponents();
+        }
+
+        function renderCmsBabyroomComponents() {
+            const container = document.getElementById('cms-babyroom-components-list');
+            container.innerHTML = "";
+
+            const targetList = tempBabyroomConfigs[activeCmsBabyroomTab].components;
+
+            if (targetList.length === 0) {
+                container.innerHTML = `<span class="text-[9px] text-brand-500 block text-center py-1 bg-white border border-dashed rounded-lg">등록된 세트 구성 부자재가 없습니다.</span>`;
+                return;
+            }
+
+            targetList.forEach((comp, index) => {
+                container.insertAdjacentHTML('beforeend', `
+                    <div class="flex items-center gap-1.5 bg-white p-1.5 rounded-xl border border-brand-200">
+                        <input type="text" value="${comp.name}" onchange="updateBabyroomComponentData(${index}, 'name', this.value)" placeholder="예: 750 가드" class="flex-grow bg-brand-50 border border-brand-200 px-2 py-1 rounded text-[10px] font-bold focus:outline-none focus:border-brand-400">
+                        <input type="number" value="${comp.qty}" onchange="updateBabyroomComponentData(${index}, 'qty', this.value)" placeholder="수량" class="w-12 bg-brand-50 border border-brand-200 px-1 py-1 rounded text-[10px] text-center font-bold focus:outline-none focus:border-brand-400">
+                        <button type="button" onclick="removeBabyroomComponentRow(${index})" class="text-rose-500 text-xs px-2 hover:text-rose-700">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                `);
+            });
+        }
+
+        function updateBabyroomComponentData(index, field, value) {
+            if (field === 'qty') {
+                tempBabyroomConfigs[activeCmsBabyroomTab].components[index].qty = parseInt(value) || 0;
+            } else {
+                tempBabyroomConfigs[activeCmsBabyroomTab].components[index].name = value;
+            }
+        }
+
+        // 모달 열기 분기
         function openAdminEditorModal(isEditMode = false) {
             const modal = document.getElementById('admin-editor-modal');
             const titleText = document.getElementById('modal-title-text');
             modal.classList.remove('hidden');
+
+            // CMS 내부 탭 임시 설정 구조 초기화
+            tempBabyroomConfigs = {
+                "10P": { boxRecommended: "", components: [] },
+                "12P": { boxRecommended: "", components: [] },
+                "14P": { boxRecommended: "", components: [] },
+                "16P": { boxRecommended: "", components: [] }
+            };
+            tempTpuAccessories = [];
 
             if (isEditMode) {
                 const p = productsDb.find(prod => prod.id === currentActiveProductId);
@@ -881,17 +1060,20 @@
                 document.getElementById('input-warning').value = p.warning;
 
                 if (p.type === "babyroom") {
-                    document.getElementById('input-default-qty').value = "6";
-                    document.getElementById('input-max-qty').value = "12";
-                    document.getElementById('input-box-threshold').value = "2";
-                    document.getElementById('input-box-small-name').value = "2P 소형박스";
-                    document.getElementById('input-box-large-name').value = "6P 표준박스";
+                    // 기 존재하는 복합 데이터 복원
+                    if (p.configs) {
+                        tempBabyroomConfigs = JSON.parse(JSON.stringify(p.configs));
+                    }
                 } else {
                     document.getElementById('input-default-qty').value = p.defaultQty;
                     document.getElementById('input-max-qty').value = p.maxQty || 12;
                     document.getElementById('input-box-threshold').value = p.boxThreshold || 2;
                     document.getElementById('input-box-small-name').value = p.boxSmallName || "2P 소형박스";
                     document.getElementById('input-box-large-name').value = p.boxLargeName || "6P 표준박스";
+
+                    if (p.accessories) {
+                        tempTpuAccessories = JSON.parse(JSON.stringify(p.accessories));
+                    }
                 }
             } else {
                 titleText.innerText = "신규 제품 매뉴얼 추가";
@@ -906,40 +1088,14 @@
                 document.getElementById('input-box-large-name').value = "14P 초대형박스";
                 document.getElementById('input-zone').value = "2C-4";
                 document.getElementById('input-warning').value = "기본 포장 시 액세서리 정합 포장 준수 요망";
-            }
+                
+                // TPU 디폴트 부자재 삽입
+                tempTpuAccessories = [
+                    { name: "전용 고정 클립 (코너)", qty: 6 }
+                ];
 
-            toggleCmsFormType();
-        }
-
-        function closeAdminEditorModal() {
-            document.getElementById('admin-editor-modal').classList.add('hidden');
-        }
-
-        function saveAdminProduct() {
-            const originalId = document.getElementById('edit-original-id').value;
-            const type = document.getElementById('input-type').value;
-            const code = document.getElementById('input-code').value.trim();
-            const name = document.getElementById('input-name').value.trim();
-            const zone = document.getElementById('input-zone').value.trim();
-            const warning = document.getElementById('input-warning').value.trim();
-
-            if (!code || !name) {
-                showToast("❌ 식별 코드와 제품 한글 명칭은 필수 항목입니다.", "warning");
-                return;
-            }
-
-            let productData = {
-                id: originalId || "item-" + Date.now(),
-                type: type,
-                code: code,
-                name: name,
-                zone: zone,
-                warning: warning
-            };
-
-            if (type === "babyroom") {
-                // 베이비룸은 정밀 구성 설정 프리셋 자동 주입
-                productData.configs = {
+                // 베이비룸 디폴트 데이터 세트 삽입
+                tempBabyroomConfigs = {
                     "10P": {
                         boxRecommended: "10P 전용 대형박스 1개 사용",
                         components: [
@@ -981,13 +1137,57 @@
                         ]
                     }
                 };
+            }
+
+            // 추천 박스 인풋 바인딩
+            document.getElementById('input-babyroom-box').addEventListener('input', function() {
+                tempBabyroomConfigs[activeCmsBabyroomTab].boxRecommended = this.value;
+            });
+
+            toggleCmsFormType();
+            
+            // 탭 초기 리셋 및 동적 행 렌더링
+            activeCmsBabyroomTab = "10P";
+            switchCmsBabyroomTab("10P");
+            renderCmsTpuAccessories();
+        }
+
+        function closeAdminEditorModal() {
+            document.getElementById('admin-editor-modal').classList.add('hidden');
+        }
+
+        function saveAdminProduct() {
+            const originalId = document.getElementById('edit-original-id').value;
+            const type = document.getElementById('input-type').value;
+            const code = document.getElementById('input-code').value.trim();
+            const name = document.getElementById('input-name').value.trim();
+            const zone = document.getElementById('input-zone').value.trim();
+            const warning = document.getElementById('input-warning').value.trim();
+
+            if (!code || !name) {
+                showToast("❌ 식별 코드와 제품 한글 명칭은 필수 항목입니다.", "warning");
+                return;
+            }
+
+            let productData = {
+                id: originalId || "item-" + Date.now(),
+                type: type,
+                code: code,
+                name: name,
+                zone: zone,
+                warning: warning
+            };
+
+            if (type === "babyroom") {
+                // 베이비룸에 변경된 tempBabyroomConfigs를 영구 이식
+                productData.configs = JSON.parse(JSON.stringify(tempBabyroomConfigs));
             } else {
-                // TPU 단일 매트 제품군용 데이터
                 productData.defaultQty = parseInt(document.getElementById('input-default-qty').value) || 6;
                 productData.maxQty = parseInt(document.getElementById('input-max-qty').value) || 12;
                 productData.boxThreshold = parseInt(document.getElementById('input-box-threshold').value) || 2;
                 productData.boxSmallName = document.getElementById('input-box-small-name').value.trim();
                 productData.boxLargeName = document.getElementById('input-box-large-name').value.trim();
+                productData.accessories = JSON.parse(JSON.stringify(tempTpuAccessories));
             }
 
             if (originalId) {
@@ -1027,6 +1227,7 @@
             }
         }
 
+        // --- STREAMING_CHUNK: Formatting other administrative UI helpers... ---
         // UI 유틸리티
         function toggleAdminPanel() {
             const panel = document.getElementById('admin-panel');
