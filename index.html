@@ -416,115 +416,518 @@
 
     <script>
         // --- ★ 동기화 방해를 원천 차단하는 핵심 타임스탬프 변수 ---
-        const CLIENT_VERSION = "1717326200"; // 배포 타임스탬프 마커
+        const CLIENT_VERSION = "1780379297319"; // 배포 타임스탬프 마커
 
         // --- ---
         // --- 1. 꿈비 리코코 TPU 매트 & 베이비룸 디폴트 데이터베이스 ---
         /* DATA_PLACEHOLDER_START */
         const initialProductsDb = [
-            {
-                id: "licoco-corner",
-                type: "tpu-mat",
-                code: "LCC-TPU-CNR",
-                name: "[리코코] 디자인 TPU 클립매트 모던 갤럭시 코너형",
-                defaultQty: 6,
-                maxQty: 12,           
-                boxThreshold: 2,       
-                boxSmallName: "2P 소형박스",
-                boxLargeName: "6P 표준박스",
-                zone: "1A-1",
-                warning: "박스당 매트 6개 입수가 기본이며, 코너용은 락 고정용 전용 클립 6개가 완전히 동봉되어 합포 출고됩니다. (2개 이하는 2P 소형 공박스 필수)",
-                accessories: [
-                    { name: "전용 고정 클립 (코너)", qty: 6 },
-                    { name: "부품 누락 방지 라벨지", qty: 1 }
-                ]
-            },
-            {
-                id: "licoco-center",
-                type: "tpu-mat",
-                code: "LCC-TPU-CTR",
-                name: "[리코코] 디자인 TPU 클립매트 모던 갤럭시 센터형",
-                defaultQty: 6,
-                maxQty: 12,
-                boxThreshold: 2,
-                boxSmallName: "2P 소형박스",
-                boxLargeName: "6P 표준박스",
-                zone: "1A-2",
-                warning: "센터형 매트는 한 박스당 고정 클립이 12개가 들어가야 합니다. 동봉 수량 실수가 잦으니 송장 수량을 반드시 확인 후 포장하십시오.",
-                accessories: [
-                    { name: "전용 고정 클립 (센터)", qty: 12 },
-                    { name: "종이 완충 패드", qty: 2 }
-                ]
-            },
-            {
-                id: "ggumbi-babyroom-10p",
-                type: "babyroom",
-                code: "GB-HG-BR10",
-                name: "[꿈비] 하이가드 베이비룸 10P 풀세트 패키지",
-                zone: "2B-1A",
-                warning: "10P 전용 대형박스 1개 구성입니다. 640/730/750 가드 정량 적재 상태 및 부자재 소포장(지퍼백) 동봉 여부를 필히 검수하세요.",
-                babyroomSize: "10P",
-                boxRecommended: "10P 전용 대형박스 1개 사용",
-                components: [
-                    { name: "640 가드", qty: 2 },
-                    { name: "730 가드", qty: 2 },
-                    { name: "750 가드", qty: 5 },
-                    { name: "750 도어", qty: 1 },
-                    { name: "부자재 소포장 (지퍼백)", qty: 1 }
-                ]
-            },
-            {
-                id: "ggumbi-babyroom-16p",
-                type: "babyroom",
-                code: "GB-HG-BR16",
-                name: "[꿈비] 하이가드 베이비룸 16P 가변 풀세트",
-                zone: "2B-1C",
-                warning: "★ 16P 세트 규칙: 8P 박스 2개(Box A, Box B)로 분할 패킹합니다. 부자재 지퍼백 2개가 각각 상자에 1개씩 완전히 나눠 담기도록 정밀 검수하세요.",
-                babyroomSize: "16P",
-                boxRecommended: "8P 박스 2개 분할 패킹",
-                components: [
-                    { name: "640 가드", qty: 4 },
-                    { name: "730 가드", qty: 2 },
-                    { name: "750 가드", qty: 9 },
-                    { name: "750 도어", qty: 1 },
-                    { name: "부자재 소포장 (지퍼백)", qty: 2 }
-                ]
-            },
-            {
-                id: "ggumbi-babyroom-18p",
-                type: "babyroom",
-                code: "GB-HG-BR18",
-                name: "[꿈비] 하이가드 베이비룸 18P 프리미엄 세트",
-                zone: "2B-2A",
-                warning: "★ 18P 세트 지침: 10P 박스 1개(Box A) + 8P 박스 1개(Box B)로 나누어 포장합니다. 각 상자에 소포장 부자재가 1개씩 무조건 분산 동봉되도록 안전 더블씰 검수를 하십시오.",
-                babyroomSize: "18P",
-                boxRecommended: "10P + 8P 박스 2개 분할 패킹",
-                components: [
-                    { name: "640 가드", qty: 4 },
-                    { name: "730 가드", qty: 4 },
-                    { name: "750 가드", qty: 9 },
-                    { name: "750 도어", qty: 1 },
-                    { name: "부자재 소포장 (지퍼백)", qty: 2 }
-                ]
-            },
-            {
-                id: "ggumbi-babyroom-20p",
-                type: "babyroom",
-                code: "GB-HG-BR20",
-                name: "[꿈비] 하이가드 베이비룸 20P 패밀리 초대형 세트",
-                zone: "2B-2B",
-                warning: "★ 20P 세트 지침: 10P 박스 2개(Box A, Box B)로 완전히 분리 패킹해야 출고가 허용됩니다. 부자재 지퍼백 2개가 누락 없이 각 박스에 수납되었는지 반드시 스캔 확인하십시오.",
-                babyroomSize: "20P",
-                boxRecommended: "10P 박스 2개 분할 패킹",
-                components: [
-                    { name: "640 가드", qty: 4 },
-                    { name: "730 가드", qty: 4 },
-                    { name: "750 가드", qty: 11 },
-                    { name: "750 도어", qty: 1 },
-                    { name: "부자재 소포장 (지퍼백)", qty: 2 }
-                ]
-            }
-        ];
+          {
+                    "id": "licoco-corner",
+                    "type": "tpu-mat",
+                    "code": "8800368450026",
+                    "name": "[리코코] 디자인 TPU 클립매트 60x60x2.5cm 모던 갤럭시 코너형",
+                    "zone": "1N",
+                    "warning": "-매트 기본 입수 6개\n-전용 고정 클립 수량 확인",
+                    "defaultQty": 6,
+                    "maxQty": 6,
+                    "boxThreshold": 2,
+                    "boxSmallName": "2P 소형박스",
+                    "boxLargeName": "6P 표준박스",
+                    "accessories": [
+                              {
+                                        "name": "전용 고정 클립 (코너)",
+                                        "qty": 6
+                              }
+                    ]
+          },
+          {
+                    "id": "licoco-center",
+                    "type": "tpu-mat",
+                    "code": "8800368450019",
+                    "name": "[리코코] 디자인 TPU 클립매트 60x60x2.5cm 모던 갤럭시 센터형",
+                    "zone": "1N",
+                    "warning": "-매트 기본 입수 6개\n-전용 고정 클립 수량 확인",
+                    "defaultQty": 6,
+                    "maxQty": 6,
+                    "boxThreshold": 2,
+                    "boxSmallName": "2P 소형박스",
+                    "boxLargeName": "6P 표준박스",
+                    "accessories": [
+                              {
+                                        "name": "전용 고정 클립 (센터)",
+                                        "qty": 12
+                              }
+                    ]
+          },
+          {
+                    "id": "licoco-side",
+                    "type": "tpu-mat",
+                    "code": "8800368450002",
+                    "name": "[리코코] 디자인 TPU 클립매트 60x60x2.5cm 모던 갤럭시 사이드형",
+                    "zone": "1N",
+                    "warning": "-매트 기본 입수 6개\n-전용 고정 클립 수량 확인",
+                    "defaultQty": 6,
+                    "maxQty": 6,
+                    "boxThreshold": 2,
+                    "boxSmallName": "2P 소형박스",
+                    "boxLargeName": "6P 표준박스",
+                    "accessories": [
+                              {
+                                        "name": "전용 고정 클립 (사이드)",
+                                        "qty": 9
+                              }
+                    ]
+          },
+          {
+                    "id": "ggumbi-babyroom",
+                    "type": "babyroom",
+                    "code": "8800257942298",
+                    "name": "[꿈비] 하이가드 베이비룸 200x140 아이보리 10p",
+                    "zone": "HW",
+                    "warning": "- 가드 및 도어를 제외한 부자재는 부자재용 비닐 지퍼백 사용",
+                    "configs": {
+                              "10P": {
+                                        "boxRecommended": "10P 전용 박스 1개 사용",
+                                        "components": [
+                                                  {
+                                                            "name": "640 가드",
+                                                            "qty": 2
+                                                  },
+                                                  {
+                                                            "name": "730 가드",
+                                                            "qty": 2
+                                                  },
+                                                  {
+                                                            "name": "750 가드",
+                                                            "qty": 5
+                                                  },
+                                                  {
+                                                            "name": "750 도어",
+                                                            "qty": 1
+                                                  },
+                                                  {
+                                                            "name": "일자 커넥터",
+                                                            "qty": 6
+                                                  },
+                                                  {
+                                                            "name": "코너 커넥터",
+                                                            "qty": 4
+                                                  },
+                                                  {
+                                                            "name": "3.5M 고정밴드",
+                                                            "qty": 2
+                                                  },
+                                                  {
+                                                            "name": "미끄럼 방지 패드",
+                                                            "qty": 26
+                                                  }
+                                        ]
+                              },
+                              "12P": {
+                                        "boxRecommended": "12P 전용 특대형박스 1개 사용",
+                                        "components": []
+                              },
+                              "14P": {
+                                        "boxRecommended": "14P 전용 초대형박스 1개 사용",
+                                        "components": []
+                              },
+                              "16P": {
+                                        "boxRecommended": "⭐ 8P 박스 2개 분할 패킹 필수 ⭐",
+                                        "components": []
+                              }
+                    }
+          },
+          {
+                    "id": "item-1780374858590",
+                    "type": "babyroom",
+                    "code": "8800257942304",
+                    "name": "[꿈비] 하이가드 베이비룸 252x140 아이보리 12p",
+                    "zone": "HW",
+                    "warning": "- 가드 및 도어를 제외한 부자재는 부자재용 비닐 지퍼백 사용",
+                    "configs": {
+                              "10P": {
+                                        "boxRecommended": "10P 전용 대형박스 1개 사용",
+                                        "components": []
+                              },
+                              "12P": {
+                                        "boxRecommended": "12P 전용 박스 1개 사용",
+                                        "components": [
+                                                  {
+                                                            "name": "640 가드",
+                                                            "qty": 6
+                                                  },
+                                                  {
+                                                            "name": "730 가드",
+                                                            "qty": 2
+                                                  },
+                                                  {
+                                                            "name": "750 가드",
+                                                            "qty": 3
+                                                  },
+                                                  {
+                                                            "name": "750 도어",
+                                                            "qty": 1
+                                                  },
+                                                  {
+                                                            "name": "일자 커넥터",
+                                                            "qty": 8
+                                                  },
+                                                  {
+                                                            "name": "코너 커넥터",
+                                                            "qty": 4
+                                                  },
+                                                  {
+                                                            "name": "3.5M 고정밴드",
+                                                            "qty": 3
+                                                  },
+                                                  {
+                                                            "name": "미끄럼 방지 패드",
+                                                            "qty": 32
+                                                  }
+                                        ]
+                              },
+                              "14P": {
+                                        "boxRecommended": "14P 전용 초대형박스 1개 사용",
+                                        "components": []
+                              },
+                              "16P": {
+                                        "boxRecommended": "⭐ 8P 박스 2개 분할 패킹 필수 ⭐",
+                                        "components": []
+                              }
+                    }
+          },
+          {
+                    "id": "item-1780374987406",
+                    "type": "babyroom",
+                    "code": "8800257942311",
+                    "name": "[꿈비] 하이가드 베이비룸 292x140 아이보리 12p",
+                    "zone": "HW",
+                    "warning": "- 가드 및 도어를 제외한 부자재는 부자재용 비닐 지퍼백 사용",
+                    "configs": {
+                              "10P": {
+                                        "boxRecommended": "10P 전용 대형박스 1개 사용",
+                                        "components": []
+                              },
+                              "12P": {
+                                        "boxRecommended": "12P 전용 박스 1개 사용",
+                                        "components": [
+                                                  {
+                                                            "name": "730 가드",
+                                                            "qty": 4
+                                                  },
+                                                  {
+                                                            "name": "750 가드",
+                                                            "qty": 5
+                                                  },
+                                                  {
+                                                            "name": "750 도어",
+                                                            "qty": 1
+                                                  },
+                                                  {
+                                                            "name": "840 도어",
+                                                            "qty": 2
+                                                  },
+                                                  {
+                                                            "name": "일자 커넥터",
+                                                            "qty": 8
+                                                  },
+                                                  {
+                                                            "name": "코너 커넥터",
+                                                            "qty": 4
+                                                  },
+                                                  {
+                                                            "name": "3.5M 고정밴드",
+                                                            "qty": 3
+                                                  },
+                                                  {
+                                                            "name": "미끄럼 방지 패드",
+                                                            "qty": 32
+                                                  }
+                                        ]
+                              },
+                              "14P": {
+                                        "boxRecommended": "14P 전용 초대형박스 1개 사용",
+                                        "components": []
+                              },
+                              "16P": {
+                                        "boxRecommended": "⭐ 8P 박스 2개 분할 패킹 필수 ⭐",
+                                        "components": []
+                              }
+                    }
+          },
+          {
+                    "id": "item-1780375100758",
+                    "type": "babyroom",
+                    "code": "8800257942328",
+                    "name": "[꿈비] 하이가드 베이비룸 323x140 아이보리 14p",
+                    "zone": "HW",
+                    "warning": "- 가드 및 도어를 제외한 부자재는 부자재용 비닐 지퍼백 사용",
+                    "configs": {
+                              "10P": {
+                                        "boxRecommended": "10P 전용 대형박스 1개 사용",
+                                        "components": []
+                              },
+                              "12P": {
+                                        "boxRecommended": "12P 전용 특대형박스 1개 사용",
+                                        "components": []
+                              },
+                              "14P": {
+                                        "boxRecommended": "14P 전용 박스 1개 사용",
+                                        "components": [
+                                                  {
+                                                            "name": "640 가드",
+                                                            "qty": 6
+                                                  },
+                                                  {
+                                                            "name": "730 가드",
+                                                            "qty": 2
+                                                  },
+                                                  {
+                                                            "name": "750 가드",
+                                                            "qty": 5
+                                                  },
+                                                  {
+                                                            "name": "750 도어",
+                                                            "qty": 1
+                                                  },
+                                                  {
+                                                            "name": "일자 커넥터",
+                                                            "qty": 10
+                                                  },
+                                                  {
+                                                            "name": "코너 커넥터",
+                                                            "qty": 4
+                                                  },
+                                                  {
+                                                            "name": "3.5M 고정밴드",
+                                                            "qty": 4
+                                                  },
+                                                  {
+                                                            "name": "미끄럼 방지 패드",
+                                                            "qty": 38
+                                                  }
+                                        ]
+                              },
+                              "16P": {
+                                        "boxRecommended": "⭐ 8P 박스 2개 분할 패킹 필수 ⭐",
+                                        "components": []
+                              }
+                    }
+          },
+          {
+                    "id": "item-1780375210150",
+                    "type": "babyroom",
+                    "code": "8800257942441",
+                    "name": "[꿈비] 하이가드 자이언트 베이비룸 252x200 아이보리 14p",
+                    "zone": "HW",
+                    "warning": "- 가드 및 도어를 제외한 부자재는 부자재용 비닐 지퍼백 사용",
+                    "configs": {
+                              "10P": {
+                                        "boxRecommended": "10P 전용 대형박스 1개 사용",
+                                        "components": []
+                              },
+                              "12P": {
+                                        "boxRecommended": "12P 전용 특대형박스 1개 사용",
+                                        "components": []
+                              },
+                              "14P": {
+                                        "boxRecommended": "14P 전용 박스 1개 사용",
+                                        "components": [
+                                                  {
+                                                            "name": "640 가드",
+                                                            "qty": 8
+                                                  },
+                                                  {
+                                                            "name": "730 가드",
+                                                            "qty": 2
+                                                  },
+                                                  {
+                                                            "name": "750 가드",
+                                                            "qty": 3
+                                                  },
+                                                  {
+                                                            "name": "750 도어",
+                                                            "qty": 1
+                                                  },
+                                                  {
+                                                            "name": "일자 커넥터",
+                                                            "qty": 10
+                                                  },
+                                                  {
+                                                            "name": "코너 커넥터",
+                                                            "qty": 4
+                                                  },
+                                                  {
+                                                            "name": "5M 고정 밴드",
+                                                            "qty": 3
+                                                  },
+                                                  {
+                                                            "name": "미끄럼 방지 패드",
+                                                            "qty": 38
+                                                  }
+                                        ]
+                              },
+                              "16P": {
+                                        "boxRecommended": "⭐ 8P 박스 2개 분할 패킹 필수 ⭐",
+                                        "components": []
+                              }
+                    }
+          },
+          {
+                    "id": "item-1780375366237",
+                    "type": "babyroom",
+                    "code": "8800257942465",
+                    "name": "[꿈비] 하이가드 자이언트 베이비룸 292x200 아이보리 14p",
+                    "zone": "HW",
+                    "warning": "- 가드 및 도어를 제외한 부자재는 부자재용 비닐 지퍼백 사용",
+                    "configs": {
+                              "10P": {
+                                        "boxRecommended": "10P 전용 대형박스 1개 사용",
+                                        "components": []
+                              },
+                              "12P": {
+                                        "boxRecommended": "12P 전용 특대형박스 1개 사용",
+                                        "components": []
+                              },
+                              "14P": {
+                                        "boxRecommended": "14P 전용 박스 1개 사용",
+                                        "components": [
+                                                  {
+                                                            "name": "640 가드",
+                                                            "qty": 2
+                                                  },
+                                                  {
+                                                            "name": "730 가드",
+                                                            "qty": 4
+                                                  },
+                                                  {
+                                                            "name": "750 가드",
+                                                            "qty": 5
+                                                  },
+                                                  {
+                                                            "name": "750 도어",
+                                                            "qty": 1
+                                                  },
+                                                  {
+                                                            "name": "840 가드",
+                                                            "qty": 2
+                                                  },
+                                                  {
+                                                            "name": "일자 커넥터",
+                                                            "qty": 10
+                                                  },
+                                                  {
+                                                            "name": "코너 커넥터",
+                                                            "qty": 4
+                                                  },
+                                                  {
+                                                            "name": "5M 고정밴드",
+                                                            "qty": 3
+                                                  },
+                                                  {
+                                                            "name": "미끄럼 방지 패드",
+                                                            "qty": 38
+                                                  }
+                                        ]
+                              },
+                              "16P": {
+                                        "boxRecommended": "⭐ 8P 박스 2개 분할 패킹 필수 ⭐",
+                                        "components": []
+                              }
+                    }
+          },
+          {
+                    "id": "item-1780375534918",
+                    "type": "babyroom",
+                    "code": "8800257942472",
+                    "name": "[꿈비] 하이가드 자이언트 베이비룸 323x200 아이보리_8p_A",
+                    "zone": "HW",
+                    "warning": "⭐ 8P 박스 2개 분할 패킹 필수 ⭐\n-8P A박스 , 8P B박스 각각 가드,도어 분할해서 출고",
+                    "configs": {
+                              "10P": {
+                                        "boxRecommended": "10P 전용 대형박스 1개 사용",
+                                        "components": []
+                              },
+                              "12P": {
+                                        "boxRecommended": "12P 전용 특대형박스 1개 사용",
+                                        "components": []
+                              },
+                              "14P": {
+                                        "boxRecommended": "14P 전용 초대형박스 1개 사용",
+                                        "components": []
+                              },
+                              "16P": {
+                                        "boxRecommended": "⭐ 8P 박스 2개 분할 패킹 필수 ⭐",
+                                        "components": [
+                                                  {
+                                                            "name": "640 가드",
+                                                            "qty": 8
+                                                  }
+                                        ]
+                              }
+                    }
+          },
+          {
+                    "id": "item-1780375614053",
+                    "type": "babyroom",
+                    "code": "8800257942489",
+                    "name": "[꿈비] 하이가드 자이언트 베이비룸 323x200 아이보리_8p_B",
+                    "zone": "HW",
+                    "warning": "⭐ 8P 박스 2개 분할 패킹 필수 ⭐\n-8P A박스 , 8P B박스 각각 가드,도어 분할해서 출고",
+                    "configs": {
+                              "10P": {
+                                        "boxRecommended": "10P 전용 대형박스 1개 사용",
+                                        "components": []
+                              },
+                              "12P": {
+                                        "boxRecommended": "12P 전용 특대형박스 1개 사용",
+                                        "components": []
+                              },
+                              "14P": {
+                                        "boxRecommended": "14P 전용 초대형박스 1개 사용",
+                                        "components": []
+                              },
+                              "16P": {
+                                        "boxRecommended": "⭐ 8P 박스 2개 분할 패킹 필수 ⭐",
+                                        "components": [
+                                                  {
+                                                            "name": "730 가드",
+                                                            "qty": 2
+                                                  },
+                                                  {
+                                                            "name": "750 가드",
+                                                            "qty": 5
+                                                  },
+                                                  {
+                                                            "name": "750 도어",
+                                                            "qty": 1
+                                                  },
+                                                  {
+                                                            "name": "일자 커넥터",
+                                                            "qty": 12
+                                                  },
+                                                  {
+                                                            "name": "코너 커넥터",
+                                                            "qty": 4
+                                                  },
+                                                  {
+                                                            "name": "3.5M 고정밴드",
+                                                            "qty": 1
+                                                  },
+                                                  {
+                                                            "name": "5M 고정밴드",
+                                                            "qty": 3
+                                                  },
+                                                  {
+                                                            "name": "미끄럼 방지 패드",
+                                                            "qty": 44
+                                                  }
+                                        ]
+                              }
+                    }
+          }
+];
         /* DATA_PLACEHOLDER_END */
 
         // --- ---
