@@ -179,14 +179,12 @@
             <!-- ⚡ [하이가드 베이비룸 포장 시뮬레이터 구역] -->
             <div id="simulator-babyroom" class="bg-white rounded-2xl p-5 space-y-4 ggumbi-shadow border border-brand-100 hidden">
                 <div class="flex items-center justify-between text-xs font-black text-brand-900">
-                    <h3><i class="fa-solid fa-receipt text-brand-500 mr-1.5"></i> 베이비룸 오더 구성 선택 (고정 규격 세트)</h3>
+                    <h3><i class="fa-solid fa-receipt text-brand-500 mr-1.5"></i> 베이비룸 오더 구성 선택 (단일 제품 규격)</h3>
                 </div>
                 
-                <!-- 세트 크기 세그먼트 버튼 (작업자 뷰에서는 오직 해당 제품의 하나의 버튼만 단독 표시되어 직관성 부여) -->
-                <div class="flex bg-brand-50 p-1.5 rounded-xl border border-brand-100 justify-center">
-                    <button id="babyroom-active-size-badge" class="text-xs font-black py-2.5 px-6 rounded-lg transition-all text-white bg-brand-500 shadow-md w-full max-w-xs text-center" disabled>
-                        10P 세트 구성 가이드
-                    </button>
+                <!-- 세트 크기 세그먼트 버튼 (작업자 뷰에서는 오직 해당 제품의 하나의 버튼만 단독 표시되어 오해 차단) -->
+                <div id="babyroom-size-buttons-container" class="flex bg-brand-50 p-1.5 rounded-xl border border-brand-100 justify-center">
+                    <!-- JS를 통해 해당 제품의 규격 버튼만 동적 렌더링됩니다 -->
                 </div>
 
                 <!-- 분할 박스 포장 지침 안내 창 (16P, 18P, 20P) -->
@@ -703,10 +701,6 @@
                 document.getElementById('simulator-tpu-mat').classList.add('hidden');
                 document.getElementById('simulator-babyroom').classList.remove('hidden');
                 
-                // 해당 제품의 고유 베이비룸 규격을 단일 고정 노출 (예: "10P 구성 패킹 가이드")
-                const activeSize = p.babyroomSize || "10P";
-                document.getElementById('babyroom-active-size-badge').innerText = `${activeSize} 세트 전용 패킹 가이드`;
-                
                 updateBabyroomSimulation(p);
             } else {
                 document.getElementById('simulator-tpu-mat').classList.remove('hidden');
@@ -823,6 +817,14 @@
             const warningEl = document.getElementById('babyroom-box-split-warning');
             const splitTitle = document.getElementById('babyroom-box-split-title');
             const splitDesc = document.getElementById('babyroom-box-split-desc');
+
+            // 10P 제품일 때 오직 10P만 뜨도록 세그먼트 버튼 영역을 고유 단일 뱃지 버튼으로 재생성
+            const buttonsContainer = document.getElementById('babyroom-size-buttons-container');
+            buttonsContainer.innerHTML = `
+                <button class="text-xs font-black py-2.5 px-6 rounded-lg text-white bg-brand-500 shadow-md w-full max-w-xs text-center cursor-default" disabled>
+                    ${activeSize} 세트 구성 가이드
+                </button>
+            `;
 
             // 16P, 18P, 20P 세트의 경우 2박스 분할 패킹 지침 활성화
             if (activeSize === "16P") {
