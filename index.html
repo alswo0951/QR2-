@@ -11,7 +11,7 @@
     <!-- FontAwesome Icons for Industrial UI -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Tailwind Custom Brand Theme Configuration (GGUMBI STORE Pastel Mint & White Theme) -->
+    <!-- Tailwind Custom Brand Theme Configuration -->
     <script>
         tailwind.config = {
             theme: {
@@ -48,6 +48,7 @@
 </head>
 <body class="text-brand-900 min-h-screen flex flex-col antialiased">
 
+    <!-- -->
     <!-- 꿈비 스토어 통합 네비게이션 헤더 -->
     <header class="bg-white/90 border-b border-brand-200/60 sticky top-0 z-40 backdrop-blur-md shadow-sm">
         <div class="max-w-md mx-auto px-4 h-16 flex items-center justify-between">
@@ -70,6 +71,7 @@
     <!-- 메인 컨텐츠 영역 -->
     <main class="flex-grow max-w-md w-full mx-auto px-4 py-5 flex flex-col justify-start">
         
+        <!-- -->
         <!-- [VIEW 1: 메인 제품 목록 로비] -->
         <section id="view-lobby" class="space-y-5">
             <div class="bg-white/85 backdrop-blur rounded-2xl p-5 ggumbi-shadow border border-white/60 flex items-center justify-between">
@@ -112,6 +114,7 @@
             <div class="space-y-3" id="product-list-container"></div>
         </section>
 
+        <!-- -->
         <!-- [VIEW 2: 개별 제품 상세 매뉴얼 페이지] -->
         <section id="view-detail" class="hidden space-y-5">
             <div class="flex items-center justify-between">
@@ -141,6 +144,7 @@
                 <p class="text-[11px] text-brand-850 leading-relaxed font-semibold" id="detail-product-warning">주의사항</p>
             </div>
 
+            <!-- -->
             <!-- ⚡ [TPU 매트 포장 시뮬레이터 구역] -->
             <div id="simulator-tpu-mat" class="bg-white rounded-2xl p-5 space-y-4 ggumbi-shadow border border-brand-100 hidden">
                 <div class="flex items-center justify-between text-xs font-black text-brand-900">
@@ -159,7 +163,7 @@
                     </div>
                 </div>
 
-                <!-- 실시간 추천 박스 가이드 알림창 (가변형 박스 추천 엔진) -->
+                <!-- 실시간 추천 박스 가이드 알림창 -->
                 <div class="bg-brand-50 border border-brand-100 p-3.5 rounded-xl flex items-center gap-3">
                     <div class="bg-brand-300 p-2.5 rounded-lg text-white">
                         <i class="fa-solid fa-box text-sm"></i>
@@ -171,28 +175,28 @@
                 </div>
             </div>
 
+            <!-- -->
             <!-- ⚡ [하이가드 베이비룸 포장 시뮬레이터 구역] -->
             <div id="simulator-babyroom" class="bg-white rounded-2xl p-5 space-y-4 ggumbi-shadow border border-brand-100 hidden">
                 <div class="flex items-center justify-between text-xs font-black text-brand-900">
-                    <h3><i class="fa-solid fa-receipt text-brand-500 mr-1.5"></i> 베이비룸 오더 구성 선택 (풀세트 가변)</h3>
+                    <h3><i class="fa-solid fa-receipt text-brand-500 mr-1.5"></i> 베이비룸 오더 구성 선택 (고정 규격 세트)</h3>
                 </div>
                 
-                <!-- 세트 크기 세그먼트 버튼 (10P / 12P / 14P / 16P) -->
-                <div class="grid grid-cols-4 gap-1.5 bg-brand-50 p-1.5 rounded-xl border border-brand-100">
-                    <button id="btn-set-10p" onclick="switchBabyroomSet('10P')" class="text-xs font-black py-2.5 rounded-lg transition-all text-brand-900 bg-white shadow-sm">10P</button>
-                    <button id="btn-set-12p" onclick="switchBabyroomSet('12P')" class="text-xs font-black py-2.5 rounded-lg transition-all text-brand-600 hover:text-brand-900">12P</button>
-                    <button id="btn-set-14p" onclick="switchBabyroomSet('14P')" class="text-xs font-black py-2.5 rounded-lg transition-all text-brand-600 hover:text-brand-900">14P</button>
-                    <button id="btn-set-16p" onclick="switchBabyroomSet('16P')" class="text-xs font-black py-2.5 rounded-lg transition-all text-brand-600 hover:text-brand-900">16P</button>
+                <!-- 세트 크기 세그먼트 버튼 (작업자 뷰에서는 오직 해당 제품의 하나의 버튼만 단독 표시되어 직관성 부여) -->
+                <div class="flex bg-brand-50 p-1.5 rounded-xl border border-brand-100 justify-center">
+                    <button id="babyroom-active-size-badge" class="text-xs font-black py-2.5 px-6 rounded-lg transition-all text-white bg-brand-500 shadow-md w-full max-w-xs text-center" disabled>
+                        10P 세트 구성 가이드
+                    </button>
                 </div>
 
-                <!-- 16P 전용 8P 박스 2개 경고 알림창 -->
+                <!-- 분할 박스 포장 지침 안내 창 (16P, 18P, 20P) -->
                 <div id="babyroom-box-split-warning" class="bg-amber-500/10 border border-amber-400 p-3.5 rounded-xl flex items-center gap-3 hidden">
                     <div class="bg-amber-500 p-2 text-white rounded-lg animate-pulse">
                         <i class="fa-solid fa-boxes-packing text-sm"></i>
                     </div>
                     <div>
-                        <span class="text-[9px] text-amber-800 block font-black uppercase">🚨 16P 구성 포장 분할 지침</span>
-                        <div class="text-xs font-black text-amber-950">8P 박스 2개에 부자재 소포장을 분할하여 포장!</div>
+                        <span class="text-[9px] text-amber-800 block font-black uppercase" id="babyroom-box-split-title">🚨 16P 구성 포장 분할 지침</span>
+                        <div class="text-xs font-black text-amber-950" id="babyroom-box-split-desc">8P 박스 2개에 부자재 소포장을 분할하여 포장!</div>
                     </div>
                 </div>
 
@@ -205,6 +209,7 @@
                 </div>
             </div>
 
+            <!-- -->
             <!-- 동적 시각 구조 레이아웃 도면 -->
             <div class="bg-white rounded-2xl p-5 space-y-3.5 border border-brand-100 ggumbi-shadow">
                 <div class="flex items-center justify-between text-[11px] font-black text-brand-900">
@@ -215,15 +220,16 @@
                     <div id="visual-layout-grid" class="grid gap-2">
                         <!-- JS로 바둑판 동적 생성 -->
                     </div>
-                    <!-- 16P 등 박스 2개 분할 시 그려질 두번째 박스 구역 -->
+                    <!-- 16P/18P/20P 등 박스 2개 분할 시 그려질 두번째 박스 구역 -->
                     <div id="visual-layout-grid-b" class="grid gap-2 hidden pt-3 border-t-2 border-dashed border-brand-200">
-                        <!-- 8P 박스 B 드로잉 구역 -->
+                        <!-- 8P/10P 박스 B 드로잉 구역 -->
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- -->
     <!-- [CMS MODAL: 제품 신규 등록 / 편집 창] -->
     <div id="admin-editor-modal" class="fixed inset-0 bg-brand-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-3xl w-full max-w-sm p-6 space-y-4 max-h-[90vh] overflow-y-auto ggumbi-shadow border border-brand-100">
@@ -245,23 +251,23 @@
                     <label class="block text-[10px] font-bold text-brand-700 mb-1">제품 유형</label>
                     <select id="input-type" onchange="toggleCmsFormType()" class="w-full bg-brand-50 border border-brand-200 rounded-xl px-3 py-2.5 font-bold focus:outline-none focus:border-brand-500">
                         <option value="tpu-mat">TPU 단일 매트 제품군</option>
-                        <option value="babyroom">하이가드 베이비룸 복합세트</option>
+                        <option value="babyroom">하이가드 베이비룸 단일세트</option>
                     </select>
                 </div>
 
                 <div>
-                    <label class="block text-[10px] font-bold text-brand-700 mb-1">제품 코드 (예: HG-BABYROOM)</label>
-                    <input type="text" id="input-code" placeholder="LCC-TPU-CNR" class="w-full bg-brand-50 border border-brand-200 rounded-xl px-3 py-2.5 font-bold focus:outline-none focus:border-brand-500">
+                    <label class="block text-[10px] font-bold text-brand-700 mb-1">제품 코드 (예: GB-HG-BR10)</label>
+                    <input type="text" id="input-code" placeholder="GB-HG-BR10" class="w-full bg-brand-50 border border-brand-200 rounded-xl px-3 py-2.5 font-bold focus:outline-none focus:border-brand-500">
                 </div>
 
                 <div>
                     <label class="block text-[10px] font-bold text-brand-700 mb-1">제품 한글 명칭</label>
-                    <input type="text" id="input-name" placeholder="[리코코] 디자인 TPU 클립매트 코너형" class="w-full bg-brand-50 border border-brand-200 rounded-xl px-3 py-2.5 font-bold focus:outline-none focus:border-brand-500">
+                    <input type="text" id="input-name" placeholder="[꿈비] 하이가드 베이비룸 10P 풀세트" class="w-full bg-brand-50 border border-brand-200 rounded-xl px-3 py-2.5 font-bold focus:outline-none focus:border-brand-500">
                 </div>
 
                 <div>
                     <label class="block text-[10px] font-bold text-brand-700 mb-1">적치 랙 구역 (로케이션)</label>
-                    <input type="text" id="input-zone" placeholder="1A-1" class="w-full bg-brand-50 border border-brand-200 rounded-xl px-3 py-2.5 font-bold focus:outline-none focus:border-brand-500">
+                    <input type="text" id="input-zone" placeholder="2B-1A" class="w-full bg-brand-50 border border-brand-200 rounded-xl px-3 py-2.5 font-bold focus:outline-none focus:border-brand-500">
                 </div>
 
                 <!-- TPU 매트 설정 전용 영역 -->
@@ -311,28 +317,34 @@
                     </div>
                 </div>
 
-                <!-- 베이비룸 설정 전용 요약 영역 -->
+                <!-- -->
+                <!-- 베이비룸 설정 전용 요약 영역 (수정할 때만 규격을 선택하도록 모달 안에 노출) -->
                 <div id="cms-babyroom-group" class="bg-brand-50 p-3 rounded-2xl border border-brand-100 space-y-3 hidden">
                     <span class="text-[10px] font-extrabold text-brand-800 flex items-center gap-1">
-                        <i class="fa-solid fa-shapes text-brand-500"></i> 베이비룸 세트별 수량 & 부자재 자유 설정
+                        <i class="fa-solid fa-shapes text-brand-500"></i> 베이비룸 규격 및 부자재 자유 설정
                     </span>
                     <p class="text-[9px] text-brand-600 leading-relaxed font-bold">
-                        10P, 12P, 14P, 16P 세트 각각에 소요되는 모든 가드 종류와 부자재 구성 수량을 독립적으로 변경할 수 있습니다.
+                        해당 제품의 고유 세트 규격을 결정하고 구성 가드와 부자재 소포장을 완벽하게 커스텀하십시오.
                     </p>
 
-                    <!-- 세트 선택용 탭 (CMS 내부) -->
-                    <div class="grid grid-cols-4 gap-1 bg-white p-1 rounded-xl border border-brand-200">
-                        <button type="button" id="cms-tab-10p" onclick="switchCmsBabyroomTab('10P')" class="text-[9px] font-bold py-1.5 rounded-lg bg-brand-100 text-brand-900">10P</button>
-                        <button type="button" id="cms-tab-12p" onclick="switchCmsBabyroomTab('12P')" class="text-[9px] font-bold py-1.5 rounded-lg text-brand-600 hover:text-brand-900">12P</button>
-                        <button type="button" id="cms-tab-14p" onclick="switchCmsBabyroomTab('14P')" class="text-[9px] font-bold py-1.5 rounded-lg text-brand-600 hover:text-brand-900">14P</button>
-                        <button type="button" id="cms-tab-16p" onclick="switchCmsBabyroomTab('16P')" class="text-[9px] font-bold py-1.5 rounded-lg text-brand-600 hover:text-brand-900">16P</button>
+                    <!-- 세트 규격 선택 드롭다운 (10P, 12P, 14P, 16P, 18P, 20P) -->
+                    <div>
+                        <label class="block text-[9px] font-bold text-brand-600 mb-1">베이비룸 세트 규격</label>
+                        <select id="input-babyroom-size" class="w-full bg-white border border-brand-200 rounded-xl px-3 py-2 font-bold focus:outline-none">
+                            <option value="10P">10P</option>
+                            <option value="12P">12P</option>
+                            <option value="14P">14P</option>
+                            <option value="16P">16P (8P 2박스로 A,B구성)</option>
+                            <option value="18P">18P (10P, 8P 2박스로 A,B구성)</option>
+                            <option value="20P">20P (10P, 10P 2박스로 A,B구성)</option>
+                        </select>
                     </div>
 
                     <!-- 세트 정보 설정 상세 구역 -->
                     <div class="space-y-2.5">
                         <div>
-                            <label class="block text-[9px] font-bold text-brand-600 mb-1" id="cms-box-label">선택된 세트 추천 박스명</label>
-                            <input type="text" id="input-babyroom-box" class="w-full bg-white border border-brand-200 rounded-xl px-2.5 py-2 font-bold focus:outline-none">
+                            <label class="block text-[9px] font-bold text-brand-600 mb-1">기본 권장 공박스 문구</label>
+                            <input type="text" id="input-babyroom-box-name" placeholder="10P 전용 박스 사용" class="w-full bg-white border border-brand-200 rounded-xl px-2.5 py-2 font-bold focus:outline-none">
                         </div>
 
                         <div class="flex items-center justify-between border-t border-brand-200/60 pt-2">
@@ -362,6 +374,7 @@
         </div>
     </div>
 
+    <!-- -->
     <!-- [ADMIN / QR GENERATOR TOOLBOX] -->
     <section class="max-w-md w-full mx-auto px-4 pb-8 space-y-3">
         <div class="bg-white/80 border border-white/90 rounded-2xl p-4 shadow-sm">
@@ -380,7 +393,7 @@
                         <img id="qr-image" src="" alt="Direct Product Manual QR" class="w-20 h-20">
                     </div>
                     <div class="space-y-1.5 overflow-hidden">
-                        <span class="text-[9px] bg-brand-100 text-brand-800 font-extrabold px-2 py-0.5 rounded border border-brand-200 uppercase" id="qr-target-code">LCC-TPU-CNR</span>
+                        <span class="text-[9px] bg-brand-100 text-brand-800 font-extrabold px-2 py-0.5 rounded border border-brand-200 uppercase" id="qr-target-code">GB-HG-BR10</span>
                         <div class="text-[10px] text-brand-900 font-black truncate max-w-[180px]" id="qr-target-name">...</div>
                         <div class="text-[9px] text-brand-500 font-mono select-all truncate max-w-[180px]" id="qr-target-link">Direct Link</div>
                     </div>
@@ -399,1045 +412,132 @@
     <footer class="py-6 text-center text-[10px] text-brand-700 font-bold mt-auto border-t border-brand-200/40 bg-white/40">
         <div class="max-w-md mx-auto px-4">
             <p>© 2026 GGUMBI Store Logistics Knowledge Hub.</p>
-            <p class="mt-1 text-brand-600">가변형 공박스(2P/6P/8P) 자재 자동 분석 솔루션 [자가 가변형]</p>
+            <p class="mt-1 text-brand-600">가변형 공박스(2P/6P/8P/10P) 자재 자동 분석 솔루션 [자가 가변형]</p>
         </div>
     </footer>
 
     <script>
         // --- ★ 동기화 방해를 원천 차단하는 핵심 타임스탬프 변수 ---
-        const CLIENT_VERSION = "1780375873776"; // 배포 타임스탬프 마커
+        const CLIENT_VERSION = "1717326200"; // 배포 타임스탬프 마커
 
+        // --- ---
         // --- 1. 꿈비 리코코 TPU 매트 & 베이비룸 디폴트 데이터베이스 ---
         /* DATA_PLACEHOLDER_START */
         const initialProductsDb = [
-          {
-                    "id": "licoco-corner",
-                    "type": "tpu-mat",
-                    "code": "8800368450026",
-                    "name": "[리코코] 디자인 TPU 클립매트 60x60x2.5cm 모던 갤럭시 코너형",
-                    "zone": "1N",
-                    "warning": "-매트 기본 입수 6개\n-전용 고정 클립 수량 확인",
-                    "defaultQty": 6,
-                    "maxQty": 6,
-                    "boxThreshold": 2,
-                    "boxSmallName": "2P 소형박스",
-                    "boxLargeName": "6P 표준박스",
-                    "accessories": [
-                              {
-                                        "name": "전용 고정 클립 (코너)",
-                                        "qty": 6
-                              }
-                    ]
-          },
-          {
-                    "id": "licoco-center",
-                    "type": "tpu-mat",
-                    "code": "8800368450019",
-                    "name": "[리코코] 디자인 TPU 클립매트 60x60x2.5cm 모던 갤럭시 센터형",
-                    "zone": "1N",
-                    "warning": "-매트 기본 입수 6개\n-전용 고정 클립 수량 확인",
-                    "defaultQty": 6,
-                    "maxQty": 6,
-                    "boxThreshold": 2,
-                    "boxSmallName": "2P 소형박스",
-                    "boxLargeName": "6P 표준박스",
-                    "accessories": [
-                              {
-                                        "name": "전용 고정 클립 (센터)",
-                                        "qty": 12
-                              }
-                    ]
-          },
-          {
-                    "id": "licoco-side",
-                    "type": "tpu-mat",
-                    "code": "8800368450002",
-                    "name": "[리코코] 디자인 TPU 클립매트 60x60x2.5cm 모던 갤럭시 사이드형",
-                    "zone": "1N",
-                    "warning": "-매트 기본 입수 6개\n-전용 고정 클립 수량 확인",
-                    "defaultQty": 6,
-                    "maxQty": 6,
-                    "boxThreshold": 2,
-                    "boxSmallName": "2P 소형박스",
-                    "boxLargeName": "6P 표준박스",
-                    "accessories": [
-                              {
-                                        "name": "전용 고정 클립 (사이드)",
-                                        "qty": 9
-                              }
-                    ]
-          },
-          {
-                    "id": "ggumbi-babyroom",
-                    "type": "babyroom",
-                    "code": "8800257942298",
-                    "name": "[꿈비] 하이가드 베이비룸 200x140 아이보리 10p",
-                    "zone": "HW",
-                    "warning": "- 가드 및 도어를 제외한 부자재는 부자재용 비닐 지퍼백 사용",
-                    "configs": {
-                              "10P": {
-                                        "boxRecommended": "10P 전용 박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 5
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "일자 커넥터",
-                                                            "qty": 6
-                                                  },
-                                                  {
-                                                            "name": "코너 커넥터",
-                                                            "qty": 4
-                                                  },
-                                                  {
-                                                            "name": "3.5M 고정밴드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "미끄럼 방지 패드",
-                                                            "qty": 26
-                                                  }
-                                        ]
-                              },
-                              "12P": {
-                                        "boxRecommended": "12P 전용 특대형박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 7
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 1
-                                                  }
-                                        ]
-                              },
-                              "14P": {
-                                        "boxRecommended": "14P 전용 초대형박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 9
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 1
-                                                  }
-                                        ]
-                              },
-                              "16P": {
-                                        "boxRecommended": "⭐ 8P 박스 2개 분할 패킹 필수 ⭐",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 4
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 9
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 2
-                                                  }
-                                        ]
-                              }
-                    }
-          },
-          {
-                    "id": "item-1780374858590",
-                    "type": "babyroom",
-                    "code": "8800257942304",
-                    "name": "[꿈비] 하이가드 베이비룸 252x140 아이보리 12p",
-                    "zone": "HW",
-                    "warning": "- 가드 및 도어를 제외한 부자재는 부자재용 비닐 지퍼백 사용",
-                    "configs": {
-                              "10P": {
-                                        "boxRecommended": "10P 전용 대형박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 5
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 1
-                                                  }
-                                        ]
-                              },
-                              "12P": {
-                                        "boxRecommended": "12P 전용 박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 6
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 3
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "일자 커넥터",
-                                                            "qty": 8
-                                                  },
-                                                  {
-                                                            "name": "코너 커넥터",
-                                                            "qty": 4
-                                                  },
-                                                  {
-                                                            "name": "3.5M 고정밴드",
-                                                            "qty": 3
-                                                  },
-                                                  {
-                                                            "name": "미끄럼 방지 패드",
-                                                            "qty": 32
-                                                  }
-                                        ]
-                              },
-                              "14P": {
-                                        "boxRecommended": "14P 전용 초대형박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 9
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 1
-                                                  }
-                                        ]
-                              },
-                              "16P": {
-                                        "boxRecommended": "⭐ 8P 박스 2개 분할 패킹 필수 ⭐",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 4
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 9
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 2
-                                                  }
-                                        ]
-                              }
-                    }
-          },
-          {
-                    "id": "item-1780374987406",
-                    "type": "babyroom",
-                    "code": "8800257942311",
-                    "name": "[꿈비] 하이가드 베이비룸 292x140 아이보리 12p",
-                    "zone": "HW",
-                    "warning": "- 가드 및 도어를 제외한 부자재는 부자재용 비닐 지퍼백 사용",
-                    "configs": {
-                              "10P": {
-                                        "boxRecommended": "10P 전용 대형박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 5
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 1
-                                                  }
-                                        ]
-                              },
-                              "12P": {
-                                        "boxRecommended": "12P 전용 박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 4
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 5
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "840 도어",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "일자 커넥터",
-                                                            "qty": 8
-                                                  },
-                                                  {
-                                                            "name": "코너 커넥터",
-                                                            "qty": 4
-                                                  },
-                                                  {
-                                                            "name": "3.5M 고정밴드",
-                                                            "qty": 3
-                                                  },
-                                                  {
-                                                            "name": "미끄럼 방지 패드",
-                                                            "qty": 32
-                                                  }
-                                        ]
-                              },
-                              "14P": {
-                                        "boxRecommended": "14P 전용 초대형박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 9
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 1
-                                                  }
-                                        ]
-                              },
-                              "16P": {
-                                        "boxRecommended": "⭐ 8P 박스 2개 분할 패킹 필수 ⭐",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 4
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 9
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 2
-                                                  }
-                                        ]
-                              }
-                    }
-          },
-          {
-                    "id": "item-1780375100758",
-                    "type": "babyroom",
-                    "code": "8800257942328",
-                    "name": "[꿈비] 하이가드 베이비룸 323x140 아이보리 14p",
-                    "zone": "HW",
-                    "warning": "- 가드 및 도어를 제외한 부자재는 부자재용 비닐 지퍼백 사용",
-                    "configs": {
-                              "10P": {
-                                        "boxRecommended": "10P 전용 대형박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 5
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 1
-                                                  }
-                                        ]
-                              },
-                              "12P": {
-                                        "boxRecommended": "12P 전용 특대형박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 7
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 1
-                                                  }
-                                        ]
-                              },
-                              "14P": {
-                                        "boxRecommended": "14P 전용 박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 6
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 5
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "일자 커넥터",
-                                                            "qty": 10
-                                                  },
-                                                  {
-                                                            "name": "코너 커넥터",
-                                                            "qty": 4
-                                                  },
-                                                  {
-                                                            "name": "3.5M 고정밴드",
-                                                            "qty": 4
-                                                  },
-                                                  {
-                                                            "name": "미끄럼 방지 패드",
-                                                            "qty": 38
-                                                  }
-                                        ]
-                              },
-                              "16P": {
-                                        "boxRecommended": "⭐ 8P 박스 2개 분할 패킹 필수 ⭐",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 4
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 9
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 2
-                                                  }
-                                        ]
-                              }
-                    }
-          },
-          {
-                    "id": "item-1780375210150",
-                    "type": "babyroom",
-                    "code": "8800257942441",
-                    "name": "[꿈비] 하이가드 자이언트 베이비룸 252x200 아이보리 14p",
-                    "zone": "HW",
-                    "warning": "- 가드 및 도어를 제외한 부자재는 부자재용 비닐 지퍼백 사용",
-                    "configs": {
-                              "10P": {
-                                        "boxRecommended": "10P 전용 대형박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 5
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 1
-                                                  }
-                                        ]
-                              },
-                              "12P": {
-                                        "boxRecommended": "12P 전용 특대형박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 7
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 1
-                                                  }
-                                        ]
-                              },
-                              "14P": {
-                                        "boxRecommended": "14P 전용 박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 8
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 3
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "일자 커넥터",
-                                                            "qty": 10
-                                                  },
-                                                  {
-                                                            "name": "코너 커넥터",
-                                                            "qty": 4
-                                                  },
-                                                  {
-                                                            "name": "5M 고정 밴드",
-                                                            "qty": 3
-                                                  },
-                                                  {
-                                                            "name": "미끄럼 방지 패드",
-                                                            "qty": 38
-                                                  }
-                                        ]
-                              },
-                              "16P": {
-                                        "boxRecommended": "⭐ 8P 박스 2개 분할 패킹 필수 ⭐",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 4
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 9
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 2
-                                                  }
-                                        ]
-                              }
-                    }
-          },
-          {
-                    "id": "item-1780375366237",
-                    "type": "babyroom",
-                    "code": "8800257942465",
-                    "name": "[꿈비] 하이가드 자이언트 베이비룸 292x200 아이보리 14p",
-                    "zone": "HW",
-                    "warning": "- 가드 및 도어를 제외한 부자재는 부자재용 비닐 지퍼백 사용",
-                    "configs": {
-                              "10P": {
-                                        "boxRecommended": "10P 전용 대형박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 5
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 1
-                                                  }
-                                        ]
-                              },
-                              "12P": {
-                                        "boxRecommended": "12P 전용 특대형박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 7
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 1
-                                                  }
-                                        ]
-                              },
-                              "14P": {
-                                        "boxRecommended": "14P 전용 박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 4
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 5
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "840 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "일자 커넥터",
-                                                            "qty": 10
-                                                  },
-                                                  {
-                                                            "name": "코너 커넥터",
-                                                            "qty": 4
-                                                  },
-                                                  {
-                                                            "name": "5M 고정밴드",
-                                                            "qty": 3
-                                                  },
-                                                  {
-                                                            "name": "미끄럼 방지 패드",
-                                                            "qty": 38
-                                                  }
-                                        ]
-                              },
-                              "16P": {
-                                        "boxRecommended": "⭐ 8P 박스 2개 분할 패킹 필수 ⭐",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 4
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 9
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 2
-                                                  }
-                                        ]
-                              }
-                    }
-          },
-          {
-                    "id": "item-1780375534918",
-                    "type": "babyroom",
-                    "code": "8800257942472",
-                    "name": "[꿈비] 하이가드 자이언트 베이비룸 323x200 아이보리_8p_A",
-                    "zone": "HW",
-                    "warning": "⭐ 8P 박스 2개 분할 패킹 필수 ⭐\n-8P A박스 , 8P B박스 각각 가드,도어 분할해서 출고",
-                    "configs": {
-                              "10P": {
-                                        "boxRecommended": "10P 전용 대형박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 5
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 1
-                                                  }
-                                        ]
-                              },
-                              "12P": {
-                                        "boxRecommended": "12P 전용 특대형박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 7
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 1
-                                                  }
-                                        ]
-                              },
-                              "14P": {
-                                        "boxRecommended": "14P 전용 초대형박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 9
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 1
-                                                  }
-                                        ]
-                              },
-                              "16P": {
-                                        "boxRecommended": "⭐ 8P 박스 2개 분할 패킹 필수 ⭐",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 8
-                                                  }
-                                        ]
-                              }
-                    }
-          },
-          {
-                    "id": "item-1780375614053",
-                    "type": "babyroom",
-                    "code": "8800257942489",
-                    "name": "[꿈비] 하이가드 자이언트 베이비룸 323x200 아이보리_8p_B",
-                    "zone": "HW",
-                    "warning": "⭐ 8P 박스 2개 분할 패킹 필수 ⭐\n-8P A박스 , 8P B박스 각각 가드,도어 분할해서 출고",
-                    "configs": {
-                              "10P": {
-                                        "boxRecommended": "10P 전용 대형박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 5
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 1
-                                                  }
-                                        ]
-                              },
-                              "12P": {
-                                        "boxRecommended": "12P 전용 특대형박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 7
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 1
-                                                  }
-                                        ]
-                              },
-                              "14P": {
-                                        "boxRecommended": "14P 전용 초대형박스 1개 사용",
-                                        "components": [
-                                                  {
-                                                            "name": "640 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 9
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "부자재 소포장 (지퍼백)",
-                                                            "qty": 1
-                                                  }
-                                        ]
-                              },
-                              "16P": {
-                                        "boxRecommended": "⭐ 8P 박스 2개 분할 패킹 필수 ⭐",
-                                        "components": [
-                                                  {
-                                                            "name": "730 가드",
-                                                            "qty": 2
-                                                  },
-                                                  {
-                                                            "name": "750 가드",
-                                                            "qty": 5
-                                                  },
-                                                  {
-                                                            "name": "750 도어",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "일자 커넥터",
-                                                            "qty": 12
-                                                  },
-                                                  {
-                                                            "name": "코너 커넥터",
-                                                            "qty": 4
-                                                  },
-                                                  {
-                                                            "name": "3.5M 고정밴드",
-                                                            "qty": 1
-                                                  },
-                                                  {
-                                                            "name": "5M 고정밴드",
-                                                            "qty": 3
-                                                  },
-                                                  {
-                                                            "name": "미끄럼 방지 패드",
-                                                            "qty": 44
-                                                  }
-                                        ]
-                              }
-                    }
-          }
-];
+            {
+                id: "licoco-corner",
+                type: "tpu-mat",
+                code: "LCC-TPU-CNR",
+                name: "[리코코] 디자인 TPU 클립매트 모던 갤럭시 코너형",
+                defaultQty: 6,
+                maxQty: 12,           
+                boxThreshold: 2,       
+                boxSmallName: "2P 소형박스",
+                boxLargeName: "6P 표준박스",
+                zone: "1A-1",
+                warning: "박스당 매트 6개 입수가 기본이며, 코너용은 락 고정용 전용 클립 6개가 완전히 동봉되어 합포 출고됩니다. (2개 이하는 2P 소형 공박스 필수)",
+                accessories: [
+                    { name: "전용 고정 클립 (코너)", qty: 6 },
+                    { name: "부품 누락 방지 라벨지", qty: 1 }
+                ]
+            },
+            {
+                id: "licoco-center",
+                type: "tpu-mat",
+                code: "LCC-TPU-CTR",
+                name: "[리코코] 디자인 TPU 클립매트 모던 갤럭시 센터형",
+                defaultQty: 6,
+                maxQty: 12,
+                boxThreshold: 2,
+                boxSmallName: "2P 소형박스",
+                boxLargeName: "6P 표준박스",
+                zone: "1A-2",
+                warning: "센터형 매트는 한 박스당 고정 클립이 12개가 들어가야 합니다. 동봉 수량 실수가 잦으니 송장 수량을 반드시 확인 후 포장하십시오.",
+                accessories: [
+                    { name: "전용 고정 클립 (센터)", qty: 12 },
+                    { name: "종이 완충 패드", qty: 2 }
+                ]
+            },
+            {
+                id: "ggumbi-babyroom-10p",
+                type: "babyroom",
+                code: "GB-HG-BR10",
+                name: "[꿈비] 하이가드 베이비룸 10P 풀세트 패키지",
+                zone: "2B-1A",
+                warning: "10P 전용 대형박스 1개 구성입니다. 640/730/750 가드 정량 적재 상태 및 부자재 소포장(지퍼백) 동봉 여부를 필히 검수하세요.",
+                babyroomSize: "10P",
+                boxRecommended: "10P 전용 대형박스 1개 사용",
+                components: [
+                    { name: "640 가드", qty: 2 },
+                    { name: "730 가드", qty: 2 },
+                    { name: "750 가드", qty: 5 },
+                    { name: "750 도어", qty: 1 },
+                    { name: "부자재 소포장 (지퍼백)", qty: 1 }
+                ]
+            },
+            {
+                id: "ggumbi-babyroom-16p",
+                type: "babyroom",
+                code: "GB-HG-BR16",
+                name: "[꿈비] 하이가드 베이비룸 16P 가변 풀세트",
+                zone: "2B-1C",
+                warning: "★ 16P 세트 규칙: 8P 박스 2개(Box A, Box B)로 분할 패킹합니다. 부자재 지퍼백 2개가 각각 상자에 1개씩 완전히 나눠 담기도록 정밀 검수하세요.",
+                babyroomSize: "16P",
+                boxRecommended: "8P 박스 2개 분할 패킹",
+                components: [
+                    { name: "640 가드", qty: 4 },
+                    { name: "730 가드", qty: 2 },
+                    { name: "750 가드", qty: 9 },
+                    { name: "750 도어", qty: 1 },
+                    { name: "부자재 소포장 (지퍼백)", qty: 2 }
+                ]
+            },
+            {
+                id: "ggumbi-babyroom-18p",
+                type: "babyroom",
+                code: "GB-HG-BR18",
+                name: "[꿈비] 하이가드 베이비룸 18P 프리미엄 세트",
+                zone: "2B-2A",
+                warning: "★ 18P 세트 지침: 10P 박스 1개(Box A) + 8P 박스 1개(Box B)로 나누어 포장합니다. 각 상자에 소포장 부자재가 1개씩 무조건 분산 동봉되도록 안전 더블씰 검수를 하십시오.",
+                babyroomSize: "18P",
+                boxRecommended: "10P + 8P 박스 2개 분할 패킹",
+                components: [
+                    { name: "640 가드", qty: 4 },
+                    { name: "730 가드", qty: 4 },
+                    { name: "750 가드", qty: 9 },
+                    { name: "750 도어", qty: 1 },
+                    { name: "부자재 소포장 (지퍼백)", qty: 2 }
+                ]
+            },
+            {
+                id: "ggumbi-babyroom-20p",
+                type: "babyroom",
+                code: "GB-HG-BR20",
+                name: "[꿈비] 하이가드 베이비룸 20P 패밀리 초대형 세트",
+                zone: "2B-2B",
+                warning: "★ 20P 세트 지침: 10P 박스 2개(Box A, Box B)로 완전히 분리 패킹해야 출고가 허용됩니다. 부자재 지퍼백 2개가 누락 없이 각 박스에 수납되었는지 반드시 스캔 확인하십시오.",
+                babyroomSize: "20P",
+                boxRecommended: "10P 박스 2개 분할 패킹",
+                components: [
+                    { name: "640 가드", qty: 4 },
+                    { name: "730 가드", qty: 4 },
+                    { name: "750 가드", qty: 11 },
+                    { name: "750 도어", qty: 1 },
+                    { name: "부자재 소포장 (지퍼백)", qty: 2 }
+                ]
+            }
+        ];
         /* DATA_PLACEHOLDER_END */
 
-        // --- STREAMING_CHUNK: Initializing state management and data localizers... ---
+        // --- ---
         let productsDb = [];
         let currentActiveProductId = "licoco-corner";
         
         let simMatQty = 6;
-        let selectedBabyroomSet = "10P";
 
         // 임시 CMS용 구조체
         let tempTpuAccessories = [];
-        let tempBabyroomConfigs = {
-            "10P": { boxRecommended: "", components: [] },
-            "12P": { boxRecommended: "", components: [] },
-            "14P": { boxRecommended: "", components: [] },
-            "16P": { boxRecommended: "", components: [] }
-        };
-        let activeCmsBabyroomTab = "10P";
+        let tempBabyroomComponents = [];
 
         function loadProductsData() {
             const savedVersion = localStorage.getItem('GGUMBI_CLIENT_VERSION');
@@ -1456,6 +556,7 @@
             localStorage.setItem('GGUMBI_PRODUCTS_DB_DYNAMIC', JSON.stringify(productsDb));
         }
 
+        // --- ---
         async function downloadUpdatedHtml() {
             try {
                 showToast("⏳ 배포용 단일 웹파일 패키징 분석 중...", "info");
@@ -1499,6 +600,7 @@
             }
         }
 
+        // --- ---
         function renderLobbyProducts() {
             const container = document.getElementById('product-list-container');
             container.innerHTML = "";
@@ -1506,11 +608,11 @@
             productsDb.forEach(p => {
                 const isBabyroom = p.type === "babyroom";
                 const specLabel = isBabyroom 
-                    ? "가변 세트형 (10P ~ 16P)" 
+                    ? `하이가드 단독형 (${p.babyroomSize || '10P'} 규격 세트)` 
                     : `입수 기준: 매트 ${p.defaultQty}개 / 공박스 분기: ${p.boxThreshold}개 이하`;
 
                 const typeBadge = isBabyroom
-                    ? `<span class="text-[8px] font-bold bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded border border-amber-200">베이비룸 세트</span>`
+                    ? `<span class="text-[8px] font-bold bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded border border-amber-200">베이비룸 ${p.babyroomSize || '10P'}</span>`
                     : `<span class="text-[8px] font-bold bg-brand-100 text-brand-800 px-1.5 py-0.5 rounded border border-brand-200">TPU 매트</span>`;
 
                 const buttonHtml = `
@@ -1535,6 +637,7 @@
             });
         }
 
+        // --- ---
         function filterProducts() {
             const searchVal = document.getElementById('search-input').value.toLowerCase();
             const container = document.getElementById('product-list-container');
@@ -1553,11 +656,11 @@
             filtered.forEach(p => {
                 const isBabyroom = p.type === "babyroom";
                 const specLabel = isBabyroom 
-                    ? "가변 세트형 (10P ~ 16P)" 
+                    ? `하이가드 단독형 (${p.babyroomSize || '10P'} 규격 세트)` 
                     : `입수 기준: 매트 ${p.defaultQty}개 / 공박스 분기: ${p.boxThreshold}개 이하`;
 
                 const typeBadge = isBabyroom
-                    ? `<span class="text-[8px] font-bold bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded border border-amber-200">베이비룸 세트</span>`
+                    ? `<span class="text-[8px] font-bold bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded border border-amber-200">베이비룸 ${p.babyroomSize || '10P'}</span>`
                     : `<span class="text-[8px] font-bold bg-brand-100 text-brand-800 px-1.5 py-0.5 rounded border border-brand-200">TPU 매트</span>`;
 
                 const buttonHtml = `
@@ -1582,7 +685,7 @@
             });
         }
 
-        // --- STREAMING_CHUNK: Processing product manual views and simulator setup... ---
+        // --- ---
         function openProductManual(id) {
             currentActiveProductId = id;
             const p = productsDb.find(prod => prod.id === id);
@@ -1599,7 +702,11 @@
             if (p.type === "babyroom") {
                 document.getElementById('simulator-tpu-mat').classList.add('hidden');
                 document.getElementById('simulator-babyroom').classList.remove('hidden');
-                selectedBabyroomSet = "10P"; 
+                
+                // 해당 제품의 고유 베이비룸 규격을 단일 고정 노출 (예: "10P 구성 패킹 가이드")
+                const activeSize = p.babyroomSize || "10P";
+                document.getElementById('babyroom-active-size-badge').innerText = `${activeSize} 세트 전용 패킹 가이드`;
+                
                 updateBabyroomSimulation(p);
             } else {
                 document.getElementById('simulator-tpu-mat').classList.remove('hidden');
@@ -1620,6 +727,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // --- ---
         // --- TPU 단일 매트 시뮬레이션 관련 핸들러 ---
         function adjustSimQty(type, val) {
             const p = productsDb.find(prod => prod.id === currentActiveProductId);
@@ -1661,7 +769,7 @@
             renderTpuVisualLayout(p);
         }
 
-        // --- STREAMING_CHUNK: Handling visual renderings for both TPU and Babyroom styles... ---
+        // --- ---
         function renderTpuVisualLayout(p) {
             document.getElementById('packing-box-indicator').innerText = "BOX A";
             document.getElementById('visual-layout-grid-b').classList.add('hidden');
@@ -1708,47 +816,42 @@
             }
         }
 
+        // --- ---
         // --- 하이가드 베이비룸 시뮬레이션 관련 핸들러 ---
-        function switchBabyroomSet(setKey) {
-            selectedBabyroomSet = setKey;
-            
-            const buttons = ["10P", "12P", "14P", "16P"];
-            buttons.forEach(b => {
-                const btnEl = document.getElementById(`btn-set-${b.toLowerCase()}`);
-                if (b === setKey) {
-                    btnEl.className = "text-xs font-black py-2.5 rounded-lg transition-all text-white bg-brand-500 shadow-md";
-                } else {
-                    btnEl.className = "text-xs font-black py-2.5 rounded-lg transition-all text-brand-600 hover:text-brand-900";
-                }
-            });
-
-            const p = productsDb.find(prod => prod.id === currentActiveProductId);
-            if (p) {
-                updateBabyroomSimulation(p);
-            }
-        }
-
-        // --- STREAMING_CHUNK: Formatting babyroom simulations dynamic tables... ---
         function updateBabyroomSimulation(p) {
-            const config = p.configs ? p.configs[selectedBabyroomSet] : null;
-            if (!config) return;
-
+            const activeSize = p.babyroomSize || "10P";
             const warningEl = document.getElementById('babyroom-box-split-warning');
-            if (selectedBabyroomSet === "16P") {
+            const splitTitle = document.getElementById('babyroom-box-split-title');
+            const splitDesc = document.getElementById('babyroom-box-split-desc');
+
+            // 16P, 18P, 20P 세트의 경우 2박스 분할 패킹 지침 활성화
+            if (activeSize === "16P") {
                 warningEl.classList.remove('hidden');
-                document.getElementById('packing-box-indicator').innerText = "8P BOX × 2개";
+                splitTitle.innerText = "🚨 16P 가드 분할 패킹 지침";
+                splitDesc.innerText = "8P 박스 2개(Box A: 8P, Box B: 8P)로 철저히 나누어 패킹하세요.";
+                document.getElementById('packing-box-indicator').innerText = "8P BOX A + 8P BOX B";
+            } else if (activeSize === "18P") {
+                warningEl.classList.remove('hidden');
+                splitTitle.innerText = "🚨 18P 가드 분할 패킹 지침";
+                splitDesc.innerText = "10P 박스 1개(Box A) + 8P 박스 1개(Box B)로 나누어 패킹하세요.";
+                document.getElementById('packing-box-indicator').innerText = "10P BOX A + 8P BOX B";
+            } else if (activeSize === "20P") {
+                warningEl.classList.remove('hidden');
+                splitTitle.innerText = "🚨 20P 가드 분할 패킹 지침";
+                splitDesc.innerText = "10P 박스 2개(Box A: 10P, Box B: 10P)로 완전히 나누어 패킹하세요.";
+                document.getElementById('packing-box-indicator').innerText = "10P BOX A + 10P BOX B";
             } else {
                 warningEl.classList.add('hidden');
-                document.getElementById('packing-box-indicator').innerText = "SINGLE BOX (" + config.boxRecommended + ")";
+                document.getElementById('packing-box-indicator').innerText = p.boxRecommended || "단일 완박스 포장";
             }
 
             const listContainer = document.getElementById('babyroom-components-list');
             listContainer.innerHTML = "";
 
-            if (!config.components || config.components.length === 0) {
+            if (!p.components || p.components.length === 0) {
                 listContainer.innerHTML = `<div class="text-center text-brand-500 py-2">등록된 구성품이 없습니다.</div>`;
             } else {
-                config.components.forEach(comp => {
+                p.components.forEach(comp => {
                     listContainer.insertAdjacentHTML('beforeend', `
                         <div class="flex items-center justify-between border-b border-brand-100/60 pb-1.5">
                             <span class="text-brand-800 flex items-center gap-1.5">
@@ -1760,29 +863,44 @@
                 });
             }
 
-            renderBabyroomVisualLayout(config.components);
+            renderBabyroomVisualLayout(p);
         }
 
-        function renderBabyroomVisualLayout(components) {
+        // --- ---
+        function renderBabyroomVisualLayout(p) {
             const gridContainerA = document.getElementById('visual-layout-grid');
             const gridContainerB = document.getElementById('visual-layout-grid-b');
+            const activeSize = p.babyroomSize || "10P";
 
             gridContainerA.innerHTML = "";
             gridContainerB.innerHTML = "";
 
-            if (!components || components.length === 0) return;
+            const components = p.components || [];
+            if (components.length === 0) return;
 
-            // 16P 가동 분할
-            if (selectedBabyroomSet === "16P") {
+            // 16P, 18P, 20P의 분할 상자 레이아웃 도킹
+            if (activeSize === "16P" || activeSize === "18P" || activeSize === "20P") {
                 gridContainerB.classList.remove('hidden');
 
                 gridContainerA.className = "grid grid-cols-1 gap-1.5";
                 gridContainerB.className = "grid grid-cols-1 gap-1.5";
 
-                gridContainerA.insertAdjacentHTML('beforeend', `<div class="text-[9px] font-extrabold text-brand-600 uppercase border-b border-brand-100 pb-1">📦 [8P 박스 A] 포장 구성</div>`);
-                gridContainerB.insertAdjacentHTML('beforeend', `<div class="text-[9px] font-extrabold text-brand-600 uppercase border-b border-brand-100 pb-1">📦 [8P 박스 B] 포장 구성</div>`);
+                let boxATitle = "📦 [Box A] 8P 박스";
+                let boxBTitle = "📦 [Box B] 8P 박스";
+
+                if (activeSize === "18P") {
+                    boxATitle = "📦 [Box A] 10P 박스";
+                    boxBTitle = "📦 [Box B] 8P 박스";
+                } else if (activeSize === "20P") {
+                    boxATitle = "📦 [Box A] 10P 박스";
+                    boxBTitle = "📦 [Box B] 10P 박스";
+                }
+
+                gridContainerA.insertAdjacentHTML('beforeend', `<div class="text-[9px] font-extrabold text-amber-800 uppercase border-b border-brand-100 pb-1">${boxATitle} 포장 구성</div>`);
+                gridContainerB.insertAdjacentHTML('beforeend', `<div class="text-[9px] font-extrabold text-amber-800 uppercase border-b border-brand-100 pb-1">${boxBTitle} 포장 구성</div>`);
 
                 components.forEach(comp => {
+                    // 수량을 균등 분할 적재 처리 (홀수의 경우 박스 A에 가드 가중치 수납)
                     const halfA = Math.ceil(comp.qty / 2);
                     const halfB = Math.floor(comp.qty / 2);
 
@@ -1806,10 +924,13 @@
                 });
 
             } else {
+                // 단일 완박스 포장 렌더링 (10P, 12P, 14P)
                 gridContainerB.classList.add('hidden');
                 gridContainerA.className = "grid grid-cols-1 gap-1.5";
 
-                gridContainerA.insertAdjacentHTML('beforeend', `<div class="text-[9px] font-extrabold text-brand-600 uppercase border-b border-brand-100 pb-1">📦 단일 완박스 포장 구성</div>`);
+                const boxName = p.boxRecommended || `${activeSize} 전용 박스`;
+                gridContainerA.insertAdjacentHTML('beforeend', `<div class="text-[9px] font-extrabold text-brand-600 uppercase border-b border-brand-100 pb-1">📦 [단일 완박스] ${boxName} 포장 구성</div>`);
+                
                 components.forEach(comp => {
                     gridContainerA.insertAdjacentHTML('beforeend', `
                         <div class="bg-white border border-brand-200 text-[10px] p-2.5 rounded-xl flex items-center justify-between shadow-sm font-bold">
@@ -1823,7 +944,7 @@
             }
         }
 
-        // --- STREAMING_CHUNK: Designing the CMS administration modules for fully flexible accessories... ---
+        // --- ---
         // --- 8. 제품 자가관리 (CMS 추가/수정/삭제) ---
         function toggleCmsFormType() {
             const selectedType = document.getElementById('input-type').value;
@@ -1839,26 +960,6 @@
             }
         }
 
-        // CMS 내부 탭 전환
-        function switchCmsBabyroomTab(tabKey) {
-            activeCmsBabyroomTab = tabKey;
-            const tabs = ["10P", "12P", "14P", "16P"];
-            tabs.forEach(t => {
-                const tabEl = document.getElementById(`cms-tab-${t.toLowerCase()}`);
-                if (t === tabKey) {
-                    tabEl.className = "text-[9px] font-bold py-1.5 rounded-lg bg-brand-100 text-brand-900";
-                } else {
-                    tabEl.className = "text-[9px] font-bold py-1.5 rounded-lg text-brand-600 hover:text-brand-900";
-                }
-            });
-
-            // 현재 탭에 해당 추천 박스 정보 연출
-            document.getElementById('cms-box-label').innerText = `선택된 [${tabKey}] 세트 추천 박스명`;
-            document.getElementById('input-babyroom-box').value = tempBabyroomConfigs[tabKey].boxRecommended || "";
-
-            renderCmsBabyroomComponents();
-        }
-
         // --- TPU 부자재 추가 행 컨트롤 ---
         function addTpuAccessoryRow(name = "", qty = 1) {
             tempTpuAccessories.push({ name: name, qty: qty });
@@ -1870,6 +971,7 @@
             renderCmsTpuAccessories();
         }
 
+        // --- ---
         function renderCmsTpuAccessories() {
             const container = document.getElementById('cms-tpu-accessories-list');
             container.innerHTML = "";
@@ -1882,7 +984,7 @@
             tempTpuAccessories.forEach((acc, index) => {
                 container.insertAdjacentHTML('beforeend', `
                     <div class="flex items-center gap-1.5 bg-white p-1.5 rounded-xl border border-brand-200">
-                        <input type="text" value="${acc.name}" onchange="updateTpuAccessoryData(${index}, 'name', this.value)" placeholder="예: 고정 클립 (코너)" class="flex-grow bg-brand-50 border border-brand-200 px-2 py-1 rounded text-[10px] font-bold focus:outline-none focus:border-brand-400">
+                        <input type="text" value="${acc.name}" onchange="updateTpuAccessoryData(${index}, 'name', this.value)" placeholder="예: 고정 클립" class="flex-grow bg-brand-50 border border-brand-200 px-2 py-1 rounded text-[10px] font-bold focus:outline-none focus:border-brand-400">
                         <input type="number" value="${acc.qty}" onchange="updateTpuAccessoryData(${index}, 'qty', this.value)" placeholder="수량" class="w-12 bg-brand-50 border border-brand-200 px-1 py-1 rounded text-[10px] text-center font-bold focus:outline-none focus:border-brand-400">
                         <button type="button" onclick="removeTpuAccessoryRow(${index})" class="text-rose-500 text-xs px-2 hover:text-rose-700">
                             <i class="fa-solid fa-trash-can"></i>
@@ -1900,14 +1002,15 @@
             }
         }
 
+        // --- ---
         // --- 베이비룸 세트 구성품 추가 행 컨트롤 ---
         function addBabyroomComponentRow(name = "", qty = 1) {
-            tempBabyroomConfigs[activeCmsBabyroomTab].components.push({ name: name, qty: qty });
+            tempBabyroomComponents.push({ name: name, qty: qty });
             renderCmsBabyroomComponents();
         }
 
         function removeBabyroomComponentRow(index) {
-            tempBabyroomConfigs[activeCmsBabyroomTab].components.splice(index, 1);
+            tempBabyroomComponents.splice(index, 1);
             renderCmsBabyroomComponents();
         }
 
@@ -1915,14 +1018,12 @@
             const container = document.getElementById('cms-babyroom-components-list');
             container.innerHTML = "";
 
-            const targetList = tempBabyroomConfigs[activeCmsBabyroomTab].components;
-
-            if (targetList.length === 0) {
-                container.innerHTML = `<span class="text-[9px] text-brand-500 block text-center py-1 bg-white border border-dashed rounded-lg">등록된 세트 구성 부자재가 없습니다.</span>`;
+            if (tempBabyroomComponents.length === 0) {
+                container.innerHTML = `<span class="text-[9px] text-brand-500 block text-center py-1 bg-white border border-dashed rounded-lg">등록된 구성품/부자재가 없습니다.</span>`;
                 return;
             }
 
-            targetList.forEach((comp, index) => {
+            tempBabyroomComponents.forEach((comp, index) => {
                 container.insertAdjacentHTML('beforeend', `
                     <div class="flex items-center gap-1.5 bg-white p-1.5 rounded-xl border border-brand-200">
                         <input type="text" value="${comp.name}" onchange="updateBabyroomComponentData(${index}, 'name', this.value)" placeholder="예: 750 가드" class="flex-grow bg-brand-50 border border-brand-200 px-2 py-1 rounded text-[10px] font-bold focus:outline-none focus:border-brand-400">
@@ -1937,26 +1038,22 @@
 
         function updateBabyroomComponentData(index, field, value) {
             if (field === 'qty') {
-                tempBabyroomConfigs[activeCmsBabyroomTab].components[index].qty = parseInt(value) || 0;
+                tempBabyroomComponents[index].qty = parseInt(value) || 0;
             } else {
-                tempBabyroomConfigs[activeCmsBabyroomTab].components[index].name = value;
+                tempBabyroomComponents[index].name = value;
             }
         }
 
+        // --- ---
         // 모달 열기 분기
         function openAdminEditorModal(isEditMode = false) {
             const modal = document.getElementById('admin-editor-modal');
             const titleText = document.getElementById('modal-title-text');
             modal.classList.remove('hidden');
 
-            // CMS 내부 탭 임시 설정 구조 초기화
-            tempBabyroomConfigs = {
-                "10P": { boxRecommended: "", components: [] },
-                "12P": { boxRecommended: "", components: [] },
-                "14P": { boxRecommended: "", components: [] },
-                "16P": { boxRecommended: "", components: [] }
-            };
+            // 임시 세팅 구조체 클렌징
             tempTpuAccessories = [];
+            tempBabyroomComponents = [];
 
             if (isEditMode) {
                 const p = productsDb.find(prod => prod.id === currentActiveProductId);
@@ -1969,9 +1066,10 @@
                 document.getElementById('input-warning').value = p.warning;
 
                 if (p.type === "babyroom") {
-                    // 기 존재하는 복합 데이터 복원
-                    if (p.configs) {
-                        tempBabyroomConfigs = JSON.parse(JSON.stringify(p.configs));
+                    document.getElementById('input-babyroom-size').value = p.babyroomSize || "10P";
+                    document.getElementById('input-babyroom-box-name').value = p.boxRecommended || "";
+                    if (p.components) {
+                        tempBabyroomComponents = JSON.parse(JSON.stringify(p.components));
                     }
                 } else {
                     document.getElementById('input-default-qty').value = p.defaultQty;
@@ -1989,82 +1087,36 @@
                 document.getElementById('edit-original-id').value = "";
                 document.getElementById('input-type').value = "tpu-mat";
                 document.getElementById('input-code').value = "LCC-TPU-NEW";
-                document.getElementById('input-name').value = "[리코코] 디자인 TPU 클립매트 자가추가 규격";
+                document.getElementById('input-name').value = "[리코코] 디자인 TPU 클립매트 신종 규격";
                 document.getElementById('input-default-qty').value = "6";
                 document.getElementById('input-max-qty').value = "14";
                 document.getElementById('input-box-threshold').value = "2";
                 document.getElementById('input-box-small-name').value = "2P 소형박스";
                 document.getElementById('input-box-large-name').value = "14P 초대형박스";
                 document.getElementById('input-zone').value = "2C-4";
-                document.getElementById('input-warning').value = "기본 포장 시 액세서리 정합 포장 준수 요망";
-                
-                // TPU 디폴트 부자재 삽입
-                tempTpuAccessories = [
-                    { name: "전용 고정 클립 (코너)", qty: 6 }
-                ];
+                document.getElementById('input-warning').value = "기본 포장 시 부자재 겹치지 않도록 밀착 검수 요망";
 
-                // 베이비룸 디폴트 데이터 세트 삽입
-                tempBabyroomConfigs = {
-                    "10P": {
-                        boxRecommended: "10P 전용 대형박스 1개 사용",
-                        components: [
-                            { name: "640 가드", qty: 2 },
-                            { name: "730 가드", qty: 2 },
-                            { name: "750 가드", qty: 5 },
-                            { name: "750 도어", qty: 1 },
-                            { name: "부자재 소포장 (지퍼백)", qty: 1 }
-                        ]
-                    },
-                    "12P": {
-                        boxRecommended: "12P 전용 특대형박스 1개 사용",
-                        components: [
-                            { name: "640 가드", qty: 2 },
-                            { name: "730 가드", qty: 2 },
-                            { name: "750 가드", qty: 7 },
-                            { name: "750 도어", qty: 1 },
-                            { name: "부자재 소포장 (지퍼백)", qty: 1 }
-                        ]
-                    },
-                    "14P": {
-                        boxRecommended: "14P 전용 초대형박스 1개 사용",
-                        components: [
-                            { name: "640 가드", qty: 2 },
-                            { name: "730 가드", qty: 2 },
-                            { name: "750 가드", qty: 9 },
-                            { name: "750 도어", qty: 1 },
-                            { name: "부자재 소포장 (지퍼백)", qty: 1 }
-                        ]
-                    },
-                    "16P": {
-                        boxRecommended: "⭐ 8P 박스 2개 분할 패킹 필수 ⭐",
-                        components: [
-                            { name: "640 가드", qty: 4 },
-                            { name: "730 가드", qty: 2 },
-                            { name: "750 가드", qty: 9 },
-                            { name: "750 도어", qty: 1 },
-                            { name: "부자재 소포장 (지퍼백)", qty: 2 }
-                        ]
-                    }
-                };
+                // 기본 데이터 셋팅
+                tempTpuAccessories = [{ name: "전용 고정 클립", qty: 6 }];
+                tempBabyroomComponents = [
+                    { name: "640 가드", qty: 2 },
+                    { name: "730 가드", qty: 2 },
+                    { name: "750 가드", qty: 5 },
+                    { name: "750 도어", qty: 1 },
+                    { name: "부자재 소포장 (지퍼백)", qty: 1 }
+                ];
             }
 
-            // 추천 박스 인풋 바인딩
-            document.getElementById('input-babyroom-box').addEventListener('input', function() {
-                tempBabyroomConfigs[activeCmsBabyroomTab].boxRecommended = this.value;
-            });
-
             toggleCmsFormType();
-            
-            // 탭 초기 리셋 및 동적 행 렌더링
-            activeCmsBabyroomTab = "10P";
-            switchCmsBabyroomTab("10P");
             renderCmsTpuAccessories();
+            renderCmsBabyroomComponents();
         }
 
         function closeAdminEditorModal() {
             document.getElementById('admin-editor-modal').classList.add('hidden');
         }
 
+        // --- ---
         function saveAdminProduct() {
             const originalId = document.getElementById('edit-original-id').value;
             const type = document.getElementById('input-type').value;
@@ -2088,8 +1140,9 @@
             };
 
             if (type === "babyroom") {
-                // 베이비룸에 변경된 tempBabyroomConfigs를 영구 이식
-                productData.configs = JSON.parse(JSON.stringify(tempBabyroomConfigs));
+                productData.babyroomSize = document.getElementById('input-babyroom-size').value;
+                productData.boxRecommended = document.getElementById('input-babyroom-box-name').value.trim() || `${productData.babyroomSize} 전용 박스 사용`;
+                productData.components = JSON.parse(JSON.stringify(tempBabyroomComponents));
             } else {
                 productData.defaultQty = parseInt(document.getElementById('input-default-qty').value) || 6;
                 productData.maxQty = parseInt(document.getElementById('input-max-qty').value) || 12;
@@ -2136,7 +1189,7 @@
             }
         }
 
-        // --- STREAMING_CHUNK: Formatting other administrative UI helpers... ---
+        // --- ---
         // UI 유틸리티
         function toggleAdminPanel() {
             const panel = document.getElementById('admin-panel');
