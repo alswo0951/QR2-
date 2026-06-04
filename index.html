@@ -1,6 +1,3 @@
-bash
-
-cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -52,7 +49,6 @@ cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
 </head>
 <body class="text-brand-900 min-h-screen flex flex-col antialiased">
 
-    <!-- 헤더 -->
     <header class="bg-white/90 border-b border-brand-200/60 sticky top-0 z-40 backdrop-blur-md shadow-sm">
         <div class="max-w-md mx-auto px-4 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-2.5">
@@ -73,7 +69,6 @@ cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
 
     <main class="flex-grow max-w-md w-full mx-auto px-4 py-5 flex flex-col justify-start">
 
-        <!-- ===== VIEW 1: 메인 로비 ===== -->
         <section id="view-lobby" class="space-y-5">
             <div class="bg-white/85 backdrop-blur rounded-2xl p-5 ggumbi-shadow border border-white/60 flex items-center justify-between">
                 <div class="space-y-1 pr-2">
@@ -88,7 +83,6 @@ cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
                 </button>
             </div>
 
-            <!-- 동기화 다운로드 -->
             <div class="bg-amber-500 text-white p-4 rounded-2xl shadow-md border border-amber-400 space-y-2.5">
                 <div class="flex items-center gap-2 text-xs font-black">
                     <i class="fa-solid fa-cloud-arrow-up animate-bounce"></i>
@@ -103,7 +97,6 @@ cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
                 </button>
             </div>
 
-            <!-- 검색창 + 그룹 편집 버튼 -->
             <div class="flex gap-2">
                 <div class="relative flex-grow">
                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -111,14 +104,12 @@ cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
                     </div>
                     <input type="text" id="search-input" onkeyup="filterProducts()" placeholder="매트 또는 베이비룸 품명 검색..." class="w-full bg-white border border-brand-200/80 rounded-2xl pl-11 pr-4 py-3.5 text-xs text-brand-900 placeholder-brand-400 font-medium focus:outline-none focus:border-brand-500 transition-all shadow-sm">
                 </div>
-                <!-- ★ NEW: 그룹 편집 버튼 -->
                 <button id="lobby-edit-btn" onclick="toggleLobbyEditMode()" class="shrink-0 bg-white border border-brand-200 hover:border-brand-500 text-brand-700 font-bold px-3.5 py-2 rounded-2xl shadow-sm flex flex-col items-center justify-center gap-1 transition-all">
                     <i class="fa-solid fa-layer-group text-sm text-brand-500"></i>
                     <span class="text-[8px]">그룹 편집</span>
                 </button>
             </div>
 
-            <!-- ★ NEW: 그룹 편집 툴바 (편집 모드에서 노출) -->
             <div id="lobby-edit-toolbar" class="hidden bg-brand-900 text-white p-4 rounded-2xl space-y-3 shadow-lg">
                 <div class="flex items-center justify-between text-xs font-black">
                     <span><i class="fa-solid fa-layer-group mr-1.5"></i> 그룹 편집 모드</span>
@@ -141,7 +132,6 @@ cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
             <div class="space-y-3" id="product-list-container"></div>
         </section>
 
-        <!-- ===== VIEW 2: 제품 상세 ===== -->
         <section id="view-detail" class="hidden space-y-5">
             <div class="flex items-center justify-between">
                 <button onclick="goBackToLobby()" class="flex items-center gap-1.5 text-xs text-brand-700 hover:text-brand-900 font-bold bg-white/80 border border-brand-200/80 px-3.5 py-2 rounded-xl shadow-sm">
@@ -169,7 +159,6 @@ cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
                 <p class="text-[11px] text-brand-850 leading-relaxed font-semibold" id="detail-product-warning">주의사항</p>
             </div>
 
-            <!-- TPU 시뮬레이터 -->
             <div id="simulator-tpu-mat" class="bg-white rounded-2xl p-5 space-y-4 ggumbi-shadow border border-brand-100 hidden">
                 <div class="flex items-center justify-between text-xs font-black text-brand-900">
                     <h3><i class="fa-solid fa-receipt text-brand-500 mr-1.5"></i> 실시간 오더/송장 수량 대입 (단독 매트)</h3>
@@ -195,7 +184,6 @@ cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
                 </div>
             </div>
 
-            <!-- 베이비룸 시뮬레이터 -->
             <div id="simulator-babyroom" class="bg-white rounded-2xl p-5 space-y-4 ggumbi-shadow border border-brand-100 hidden">
                 <div class="flex items-center justify-between text-xs font-black text-brand-900">
                     <h3><i class="fa-solid fa-receipt text-brand-500 mr-1.5"></i> 베이비룸 오더 구성 선택 (단일 제품 규격)</h3>
@@ -214,7 +202,6 @@ cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
                 </div>
             </div>
 
-            <!-- 적재 레이아웃 -->
             <div class="bg-white rounded-2xl p-5 space-y-3.5 border border-brand-100 ggumbi-shadow">
                 <div class="flex items-center justify-between text-[11px] font-black text-brand-900">
                     <span><i class="fa-regular fa-eye text-brand-500 mr-1"></i> 포장 적재 레이아웃 (실시간 Top-View)</span>
@@ -228,7 +215,6 @@ cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
         </section>
     </main>
 
-    <!-- ===== CMS MODAL: 제품 등록/수정 ===== -->
     <div id="admin-editor-modal" class="fixed inset-0 bg-brand-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-3xl w-full max-w-sm p-6 space-y-4 max-h-[90vh] overflow-y-auto ggumbi-shadow border border-brand-100">
             <div class="flex items-center justify-between border-b border-brand-100 pb-3">
@@ -262,7 +248,6 @@ cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
                     <input type="text" id="input-zone" class="w-full bg-brand-50 border border-brand-200 rounded-xl px-3 py-2.5 font-bold focus:outline-none focus:border-brand-500">
                 </div>
 
-                <!-- TPU 전용 -->
                 <div id="cms-tpu-group" class="bg-brand-50 p-3 rounded-2xl border border-brand-100 space-y-3">
                     <span class="text-[10px] font-extrabold text-brand-800 flex items-center gap-1">
                         <i class="fa-solid fa-sliders text-brand-500"></i> TPU 자가 가변형 공박스 규칙 커스텀
@@ -300,7 +285,6 @@ cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
                     </div>
                 </div>
 
-                <!-- 베이비룸 전용 -->
                 <div id="cms-babyroom-group" class="bg-brand-50 p-3 rounded-2xl border border-brand-100 space-y-3 hidden">
                     <span class="text-[10px] font-extrabold text-brand-800 flex items-center gap-1">
                         <i class="fa-solid fa-shapes text-brand-500"></i> 베이비룸 규격 및 부자재 자유 설정
@@ -321,7 +305,6 @@ cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
                         <input type="text" id="input-babyroom-box-name" placeholder="10P 전용 박스 사용" class="w-full bg-white border border-brand-200 rounded-xl px-2.5 py-2 font-bold focus:outline-none">
                     </div>
 
-                    <!-- ★ NEW: 색상 팔레트 안내 -->
                     <div class="bg-white border border-brand-200 rounded-xl p-3 space-y-2">
                         <span class="text-[10px] font-extrabold text-brand-800 block"><i class="fa-solid fa-palette text-brand-500 mr-1"></i> 구성품 텍스트 색상 안내</span>
                         <p class="text-[9px] text-brand-600 leading-relaxed">각 구성품 행 오른쪽의 색상 점을 눌러 텍스트 강조 색상을 지정할 수 있습니다. 가드류와 부자재를 색으로 구분하세요.</p>
@@ -355,7 +338,6 @@ cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
         </div>
     </div>
 
-    <!-- ===== QR 패널 ===== -->
     <section class="max-w-md w-full mx-auto px-4 pb-8 space-y-3">
         <div class="bg-white/80 border border-white/90 rounded-2xl p-4 shadow-sm">
             <button onclick="toggleAdminPanel()" class="w-full flex items-center justify-between text-xs font-black text-brand-900">
@@ -378,7 +360,6 @@ cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
         </div>
     </section>
 
-    <!-- 토스트 -->
     <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white border border-brand-200 text-brand-900 text-xs py-3.5 px-6 rounded-2xl shadow-2xl flex items-center gap-2.5 z-50 opacity-0 pointer-events-none transition-all duration-300">
         <i id="toast-icon" class="fa-solid fa-circle-info text-brand-500"></i>
         <span id="toast-message" class="font-extrabold">알림 메시지</span>
@@ -392,7 +373,7 @@ cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
     </footer>
 
 <script>
-    const CLIENT_VERSION = "1780555582968";
+    const CLIENT_VERSION = "1780554344327";
 
     // ★ 색상 팔레트 정의
     const COLOR_PALETTE = [
@@ -3247,10 +3228,8 @@ cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
             "accessories": []
       }
 ];
-    /* DATA_PLACEHOLDER_END */
-
-    // ★ 그룹 데이터베이스
     const initialGroupsDb = [];
+    /* DATA_PLACEHOLDER_END */
 
     let productsDb = [];
     let groupsDb = [];
@@ -3289,21 +3268,42 @@ cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
     // =============================================
     // HTML 다운로드
     // =============================================
-async function downloadUpdatedHtml() {
-    // ... (중략) ...
-    const startIndex = htmlText.indexOf(startMarker);
-    const endIndex = htmlText.indexOf(endMarker);
-    if (startIndex === -1 || endIndex === -1) {
-        showToast("❌ 배포 마커가 소실되었습니다.", "warning"); return;
+    async function downloadUpdatedHtml() {
+        try {
+            showToast("⏳ 배포용 단일 웹파일 패키징 분석 중...", "info");
+            const response = await fetch(window.location.href.split('?')[0]);
+            let htmlText = await response.text();
+            const startMarker = "/* DATA_PLACEHOLDER_START */";
+            const endMarker = "/* DATA_PLACEHOLDER_END */";
+            const startIndex = htmlText.indexOf(startMarker);
+            const endIndex = htmlText.indexOf(endMarker);
+            if (startIndex === -1 || endIndex === -1) {
+                showToast("❌ 배포 마커가 소실되었습니다.", "warning"); return;
+            }
+            
+            // ★ 수정된 부분: 그룹 데이터도 파일에 함께 저장되도록 반영
+            const updatedDbString = "\n    const initialProductsDb = " + JSON.stringify(productsDb, null, 6) + ";\n" +
+                                    "    const initialGroupsDb = " + JSON.stringify(groupsDb, null, 6) + ";\n    ";
+            
+            let newHtml = htmlText.substring(0, startIndex + startMarker.length) + updatedDbString + htmlText.substring(endIndex);
+            const versionMarker = 'const CLIENT_VERSION = "';
+            const versionIndex = newHtml.indexOf(versionMarker);
+            if (versionIndex !== -1) {
+                const nextQuoteIndex = newHtml.indexOf('";', versionIndex + versionMarker.length);
+                if (nextQuoteIndex !== -1) {
+                    newHtml = newHtml.substring(0, versionIndex + versionMarker.length) + Date.now() + newHtml.substring(nextQuoteIndex);
+                }
+            }
+            const blob = new Blob([newHtml], { type: "text/html;charset=utf-8" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "index.html";
+            link.click();
+            showToast("💾 index.html 다운로드 완료!", "success");
+        } catch (err) {
+            showToast("❌ 웹파일 생성 실패.", "warning");
+        }
     }
-    
-    // ★ 이 부분을 수정합니다: initialGroupsDb도 함께 문자열로 만들어서 넣어줍니다.
-    const updatedDbString = "\n    const initialProductsDb = " + JSON.stringify(productsDb, null, 6) + ";\n" +
-                            "    const initialGroupsDb = " + JSON.stringify(groupsDb, null, 6) + ";\n    ";
-                            
-    let newHtml = htmlText.substring(0, startIndex + startMarker.length) + updatedDbString + htmlText.substring(endIndex);
-    // ... (후략) ...
-}
 
     // =============================================
     // ★ NEW: 그룹 편집 모드
@@ -3760,7 +3760,6 @@ async function downloadUpdatedHtml() {
                         <input type="number" value="${comp.qty}" onchange="updateBabyroomComponentData(${index}, 'qty', this.value)" class="w-12 bg-brand-50 border border-brand-200 px-1 py-1 rounded text-[10px] text-center font-bold focus:outline-none">
                         <button type="button" onclick="removeBabyroomComponentRow(${index})" class="text-rose-500 text-xs px-2 hover:text-rose-700"><i class="fa-solid fa-trash-can"></i></button>
                     </div>
-                    <!-- ★ 색상 선택 스왓치 -->
                     <div class="flex items-center gap-1.5 flex-wrap pt-0.5">
                         <span class="text-[8px] text-brand-500 font-bold">색상:</span>
                         ${swatches}
@@ -3942,6 +3941,3 @@ async function downloadUpdatedHtml() {
 </script>
 </body>
 </html>
-HTMLEOF
-echo "Done. Size: $(wc -c < /mnt/user-data/outputs/index.html) bytes"
-출력
