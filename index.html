@@ -3289,38 +3289,21 @@ cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
     // =============================================
     // HTML 다운로드
     // =============================================
-    async function downloadUpdatedHtml() {
-        try {
-            showToast("⏳ 배포용 단일 웹파일 패키징 분석 중...", "info");
-            const response = await fetch(window.location.href.split('?')[0]);
-            let htmlText = await response.text();
-            const startMarker = "/* DATA_PLACEHOLDER_START */";
-            const endMarker = "/* DATA_PLACEHOLDER_END */";
-            const startIndex = htmlText.indexOf(startMarker);
-            const endIndex = htmlText.indexOf(endMarker);
-            if (startIndex === -1 || endIndex === -1) {
-                showToast("❌ 배포 마커가 소실되었습니다.", "warning"); return;
-            }
-            const updatedDbString = "\n    const initialProductsDb = " + JSON.stringify(productsDb, null, 6) + ";\n    ";
-            let newHtml = htmlText.substring(0, startIndex + startMarker.length) + updatedDbString + htmlText.substring(endIndex);
-            const versionMarker = 'const CLIENT_VERSION = "';
-            const versionIndex = newHtml.indexOf(versionMarker);
-            if (versionIndex !== -1) {
-                const nextQuoteIndex = newHtml.indexOf('";', versionIndex + versionMarker.length);
-                if (nextQuoteIndex !== -1) {
-                    newHtml = newHtml.substring(0, versionIndex + versionMarker.length) + Date.now() + newHtml.substring(nextQuoteIndex);
-                }
-            }
-            const blob = new Blob([newHtml], { type: "text/html;charset=utf-8" });
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = "index.html";
-            link.click();
-            showToast("💾 index.html 다운로드 완료!", "success");
-        } catch (err) {
-            showToast("❌ 웹파일 생성 실패.", "warning");
-        }
+async function downloadUpdatedHtml() {
+    // ... (중략) ...
+    const startIndex = htmlText.indexOf(startMarker);
+    const endIndex = htmlText.indexOf(endMarker);
+    if (startIndex === -1 || endIndex === -1) {
+        showToast("❌ 배포 마커가 소실되었습니다.", "warning"); return;
     }
+    
+    // ★ 이 부분을 수정합니다: initialGroupsDb도 함께 문자열로 만들어서 넣어줍니다.
+    const updatedDbString = "\n    const initialProductsDb = " + JSON.stringify(productsDb, null, 6) + ";\n" +
+                            "    const initialGroupsDb = " + JSON.stringify(groupsDb, null, 6) + ";\n    ";
+                            
+    let newHtml = htmlText.substring(0, startIndex + startMarker.length) + updatedDbString + htmlText.substring(endIndex);
+    // ... (후략) ...
+}
 
     // =============================================
     // ★ NEW: 그룹 편집 모드
